@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KHANG's Cyber Mini-games v1.1 - Play to learn!</title>
+    <title>Kien's Arcade v2.1 - Cyber Mini-Games Hub</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
                               linear-gradient(to bottom, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
             background-size: 30px 30px;
         }
-        canvas { max-w: 100%; max-h: 100%; display: block; }
+        canvas { max-width: 100%; max-height: 100%; display: block; }
     </style>
 </head>
 <body class="bg-[#04050e] text-slate-300 antialiased min-h-screen relative overflow-hidden select-none">
@@ -27,12 +27,12 @@
     <div id="dashboard-view" class="relative z-10 max-w-5xl mx-auto px-6 pt-10 space-y-8 overflow-y-auto h-screen pb-10">
         <header class="text-center space-y-2">
             <div class="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 px-4 py-1 rounded-full text-[10px] font-bold text-cyan-400 tracking-wider font-digital">
-                <i class="fa-solid fa-circle-check text-emerald-400 animate-pulse"></i> ALL SYSTEMS OPERATIONAL v2.0
+                <i class="fa-solid fa-circle-check text-emerald-400 animate-pulse"></i> ALL SYSTEMS OPERATIONAL v2.1
             </div>
             <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white">
-                KHANG's <span class="bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]"> Cyber Mini-games v1.1 - Play to learn!</span>
+                KIEN'S <span class="bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]">ARCADE</span>
             </h1>
-            <p class="text-xs text-slate-400 max-w-sm mx-auto">Tối ưu 100% cho Cảm ứng Mobile & Máy tính bảng. Chạm và chơi ngay!</p>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto">Sửa lỗi hiển thị thẻ bài - Tối ưu hình ảnh sinh động cho trẻ nhỏ!</p>
         </header>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
@@ -40,8 +40,8 @@
                 <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:bg-purple-500/20 transition-colors"><i class="fa-solid fa-brain text-xl"></i></div>
                 <div>
                     <span class="text-[10px] font-bold font-digital tracking-widest text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">TOUCH GAME</span>
-                    <h3 class="font-extrabold text-white text-lg mt-2 group-hover:text-purple-400 transition-colors">1. Lật Thẻ Trí Nhớ</h3>
-                    <p class="text-xs text-slate-500 mt-1">Tìm các cặp bài mạch điện tử giống nhau. Giúp con rèn luyện khả năng ghi nhớ ngắn hạn cực tốt.</p>
+                    <h3 class="font-extrabold text-white text-lg mt-2 group-hover:text-purple-400 transition-colors">1. Lật Thẻ Sinh Vật</h3>
+                    <p class="text-xs text-slate-500 mt-1">Tìm các cặp hình thú và phi thuyền sinh động. Giúp con rèn luyện trí nhớ ngắn hạn và sự tập trung.</p>
                 </div>
             </button>
 
@@ -59,7 +59,7 @@
                 <div>
                     <span class="text-[10px] font-bold font-digital tracking-widest text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">SWIPE CONTROL</span>
                     <h3 class="font-extrabold text-white text-lg mt-2 group-hover:text-amber-400 transition-colors">3. Ma Trận Số 2048</h3>
-                    <p class="text-xs text-slate-500 mt-1">Vuốt màn hình để dịch chuyển và gộp các ô số giống nhau. Rèn luyện tư duy toán học và logic tính toán.</p>
+                    <p class="text-xs text-slate-500 mt-1">Vuốt màn hình để dịch chuyển và gộp các ô số. Rèn luyện tư duy toán học và logic tính toán.</p>
                 </div>
             </button>
 
@@ -68,7 +68,7 @@
                 <div>
                     <span class="text-[10px] font-bold font-digital tracking-widest text-red-400 bg-red-500/10 px-2 py-0.5 rounded">DRAG TO FLY</span>
                     <h3 class="font-extrabold text-white text-lg mt-2 group-hover:text-red-400 transition-colors">4. Chiến Cơ Vũ Trụ</h3>
-                    <p class="text-xs text-slate-500 mt-1">Giữ và di ngón tay để lái chiến cơ nã đạn hủy diệt phi thuyền quái vật ngoài hành tinh. Cháy nổ sống động.</p>
+                    <p class="text-xs text-slate-500 mt-1">Giữ và di ngón tay để lái chiến cơ nã đạn hủy diệt quái vật vũ trụ. Hiệu ứng bùng nổ sống động.</p>
                 </div>
             </button>
         </div>
@@ -97,7 +97,7 @@
             </div>
         </div>
         
-        <p class="text-center text-[10px] text-slate-500 italic font-mono tracking-wide">KHANG's Cyber Mini-games v1.1 - SECURITY PROTOCOL ENFORCED</p>
+        <p class="text-center text-[10px] text-slate-500 italic font-mono tracking-wide">KIEN'S ARCADE - SECURITY PROTOCOL ENFORCED</p>
     </div>
 
     <script>
@@ -111,7 +111,7 @@
         let isGameRunning = false;
         let particles = [];
 
-        // Hệ thống phát hiện vuốt màn hình (Swipe Detection) cho cấu trúc game 2048
+        // Hệ thống phát hiện vuốt màn hình (Swipe Detection) cho 2048
         let touchStartX = 0, touchStartY = 0;
         canvas.addEventListener('touchstart', e => {
             touchStartX = e.touches[0].clientX;
@@ -123,7 +123,6 @@
             let diffX = e.changedTouches[0].clientX - touchStartX;
             let diffY = e.changedTouches[0].clientY - touchStartY;
             
-            // Ngưỡng tối thiểu để tính là một lượt vuốt tránh chạm nhầm (swipe threshold)
             if (Math.max(Math.abs(diffX), Math.abs(diffY)) < 25) return;
 
             if (Math.abs(diffX) > Math.abs(diffY)) {
@@ -133,7 +132,6 @@
             }
         }, { passive: true });
 
-        // Phím bổ trợ cho máy tính nếu chơi giả lập
         window.addEventListener('keydown', e => {
             if (!isGameRunning) return;
             if (currentActiveGame === 'game2048') {
@@ -145,7 +143,6 @@
             if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault();
         });
 
-        // --- ĐIỀU HƯỚNG ROUTER HUB ---
         function launchGame(gameId) {
             document.getElementById('dashboard-view').classList.add('hidden');
             document.getElementById('game-view').classList.remove('hidden');
@@ -216,7 +213,6 @@
             }
         }
 
-        // Tạo hiệu ứng nổ hạt sáng (Particle Explosion) khi quái chết hoặc gộp số
         function createExplosion(x, y, color, count=10) {
             for(let i=0; i<count; i++) {
                 particles.push({
@@ -240,10 +236,11 @@
 
 
         // =====================================================================
-        // GAME 1: LẬT THẺ TRÍ NHỚ (MEMORY MATCH)
+        // GAME 1: LẬT THẺ TRÍ NHỚ (NÂNG CẤP BẢN EMOJI KHÔNG LỖI)
         // =====================================================================
         let memoryCards, firstCard, secondCard, lockBoard, pairsFound, currentMoves;
-        const cardIcons = ['\uf544', '\uf2db', '\uf11b', '\uf4fe', '\uf7c3', '\uf729', '\uf5d2', '\uf5dc']; // Unicode FontAwesome
+        // Bộ Emoji rực rỡ, độ phân giải cao gốc của hệ điều hành, cam kết không lỗi font
+        const cardIcons = ['🦁', '🦖', '🦈', '🐼', '🚀', '🛸', '👾', '🤖']; 
 
         function startMemoryGame() {
             document.getElementById('game-overlay').classList.add('hidden');
@@ -253,7 +250,7 @@
 
             let deck = [...cardIcons, ...cardIcons].sort(() => Math.random() - 0.5);
             memoryCards = [];
-            const cW = 75, cH = 75, gapX = 14, gapY = 14;
+            const cW = 76, cH = 76, gapX = 14, gapY = 14;
             const startX = (canvas.width - (4 * cW + 3 * gapX)) / 2;
             const startY = (canvas.height - (4 * cH + 3 * gapY)) / 2;
 
@@ -279,13 +276,13 @@
                         
                         if (firstCard.icon === secondCard.icon) {
                             firstCard.isMatched = secondCard.isMatched = true; pairsFound++;
-                            createExplosion(card.x + card.w/2, card.y + card.h/2, '#a855f7', 12);
+                            createExplosion(card.x + card.w/2, card.y + card.h/2, '#22d3ee', 15);
                             firstCard = secondCard = null;
                             updateScore(pairsFound * 25);
                             if (pairsFound === 8) {
                                 isGameRunning = false;
                                 setTimeout(() => {
-                                    document.getElementById('overlay-title').innerText = "CON THIÊN TÀI!";
+                                    document.getElementById('overlay-title').innerText = "TRÍ NHỚ SIÊU PHÀM!";
                                     document.getElementById('overlay-title').className = "text-2xl font-black text-purple-400";
                                     document.getElementById('overlay-desc').innerText = `Tuyệt vời! Con tìm đủ các cặp thẻ trong ${currentMoves} lượt mở bài.`;
                                     document.getElementById('game-overlay').classList.remove('hidden');
@@ -313,21 +310,23 @@
                 memoryCards.forEach(card => {
                     ctx.save();
                     if (card.isFlipped || card.isMatched) {
-                        ctx.fillStyle = card.isMatched ? '#120b2e' : '#111827';
-                        ctx.strokeStyle = card.isMatched ? '#a855f7' : '#6366f1'; ctx.lineWidth = 2.5;
-                        ctx.shadowBlur = card.isMatched ? 8 : 0; ctx.shadowColor = '#a855f7';
-                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 10); ctx.fill(); ctx.stroke();
+                        // Mặt trước khi mở: Viền sáng rực rỡ
+                        ctx.fillStyle = card.isMatched ? '#091d24' : '#111827';
+                        ctx.strokeStyle = card.isMatched ? '#22d3ee' : '#6366f1'; ctx.lineWidth = 2.5;
+                        ctx.shadowBlur = card.isMatched ? 8 : 0; ctx.shadowColor = '#22d3ee';
+                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 12); ctx.fill(); ctx.stroke();
                         
-                        ctx.fillStyle = card.isMatched ? '#c084fc' : '#818cf8';
-                        ctx.font = "28px 'Font Awesome 6 Free'"; ctx.fontWeight = "900";
+                        // Vẽ hình Emoji (Cam kết không lỗi font)
+                        ctx.font = "36px sans-serif";
                         ctx.textAlign = "center"; ctx.textBaseline = "middle";
-                        ctx.fillText(card.icon, card.x + card.w/2, card.y + card.h/2);
+                        ctx.fillText(card.icon, card.x + card.w/2, card.y + card.h/2 + 2); 
                     } else {
+                        // Mặt sau khi đóng: Họa tiết ma trận Cyber bí ẩn
                         ctx.fillStyle = '#0b0f19'; ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1.5;
-                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 10); ctx.fill(); ctx.stroke();
-                        // Đường vân mạch điện trang trí
-                        ctx.strokeStyle = '#22d3ee20'; ctx.strokeRect(card.x + 8, card.y + 8, card.w - 16, card.h - 16);
-                        ctx.fillStyle = '#1e293b'; ctx.font = "bold 20px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 12); ctx.fill(); ctx.stroke();
+                        
+                        ctx.strokeStyle = '#a855f725'; ctx.strokeRect(card.x + 8, card.y + 8, card.w - 16, card.h - 16);
+                        ctx.fillStyle = '#3b4252'; ctx.font = "bold 22px 'Share Tech Mono'"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
                         ctx.fillText("?", card.x + card.w/2, card.y + card.h/2);
                     }
                     ctx.restore();
@@ -340,7 +339,7 @@
 
 
         // =====================================================================
-        // GAME 2: CYBER MECHA BIRD (FLAPPY BIRD CLONE)
+        // GAME 2: CYBER MECHA BIRD
         // =====================================================================
         let bird, pipes;
         const bGravity = 0.32, bJump = -6.2;
@@ -370,28 +369,21 @@
                 if (bird.velocity > 0) bird.wingAngle = Math.max(-0.4, bird.wingAngle - 0.04);
                 if (bird.y + bird.h > canvas.height || bird.y < 0) { triggerGameOver(); return; }
 
-                // Đuôi bụi phản lực liên tục
                 if (Math.random() > 0.5) particles.push({ x: bird.x - 2, y: bird.y + bird.h/2, vx: -1.5, vy: (Math.random()-0.5)*1, size: Math.random()*2+1, color: '#22d3ee', alpha: 0.7 });
 
-                // Render chú Chim Mecha bằng Vector Code
                 ctx.save(); ctx.translate(bird.x + bird.w/2, bird.y + bird.h/2);
                 ctx.rotate(Math.min(Math.max(bird.velocity * 0.05, -0.3), 0.6));
                 ctx.shadowBlur = 10; ctx.shadowColor = '#22d3ee';
                 
-                // Khớp cánh động
                 ctx.save(); ctx.translate(-4, 1); ctx.rotate(bird.wingAngle);
                 ctx.fillStyle = '#0284c7'; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-12,-12); ctx.lineTo(-4,-18); ctx.lineTo(5,-3); ctx.closePath(); ctx.fill();
                 ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
 
-                // Thân chim
                 ctx.fillStyle = '#0ea5e9'; ctx.beginPath(); ctx.ellipse(0,0, bird.w/2, bird.h/2, 0, 0, Math.PI*2); ctx.fill();
-                // Mỏ vàng
                 ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.moveTo(bird.w/2 - 2, -4); ctx.lineTo(bird.w/2 + 8, 0); ctx.lineTo(bird.w/2 - 2, 4); ctx.closePath(); ctx.fill();
-                // Mắt Laser đỏ rực
                 ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(5, -3, 3.5, 0, Math.PI*2); ctx.fill();
                 ctx.restore();
 
-                // Quản lý ống cột Laser
                 pipeTimer++;
                 if (pipeTimer > 115) {
                     let gap = 140, minH = 50, maxH = canvas.height - gap - minH - 80;
@@ -404,16 +396,13 @@
                     let p = pipes[i]; p.x -= 2.4;
                     if (p.x + p.w < 0) { pipes.splice(i, 1); continue; }
 
-                    // Vẽ cột
                     ctx.fillStyle = '#1e1b4b'; ctx.strokeStyle = '#6366f1'; ctx.lineWidth = 1.5;
                     ctx.fillRect(p.x, 0, p.w, p.topH); ctx.strokeRect(p.x, 0, p.w, p.topH);
                     ctx.fillRect(p.x, p.botY, p.w, canvas.height - p.botY); ctx.strokeRect(p.x, p.botY, p.w, canvas.height - p.botY);
 
-                    // Đầu bắn laser phát sáng
                     ctx.save(); ctx.shadowBlur = 12; ctx.shadowColor = '#f43f5e'; ctx.fillStyle = '#f43f5e';
                     ctx.fillRect(p.x-2, p.topH-7, p.w+4, 7); ctx.fillRect(p.x-2, p.botY, p.w+4, 7); ctx.restore();
 
-                    // Va chạm
                     if (bird.x + 2 < p.x + p.w && bird.x + bird.w - 2 > p.x) {
                         if (bird.y + 2 < p.topH || bird.y + bird.h - 2 > p.botY) { triggerGameOver(); return; }
                     }
@@ -427,7 +416,7 @@
 
 
         // =====================================================================
-        // GAME 3: MA TRẬN SỐ 2048 (CYBER 2048)
+        // GAME 3: MA TRẬN SỐ 2048
         // =====================================================================
         let grid2048, score2048;
         const size2048 = 4;
@@ -466,22 +455,15 @@
             const startX = (canvas.width - boardW) / 2;
             const startY = (canvas.height - boardW) / 2;
 
-            // Vẽ khung bảng nền
             ctx.fillStyle = '#0d1224'; ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 2;
             ctx.beginPath(); ctx.roundRect(startX, startY, boardW, boardW, 14); ctx.fill(); ctx.stroke();
 
-            // Bảng màu sắc tương thích Neon Cyber cho từng lũy thừa số
             const colors = {
-                2: {bg: '#1e293b', txt: '#f8fafc', glow: 0},
-                4: {bg: '#334155', txt: '#f8fafc', glow: 0},
-                8: {bg: '#1e3a8a', txt: '#93c5fd', glow: 5},
-                16: {bg: '#2563eb', txt: '#ffffff', glow: 8},
-                32: {bg: '#065f46', txt: '#a7f3d0', glow: 6},
-                64: {bg: '#059669', txt: '#ffffff', glow: 10},
-                128: {bg: '#78350f', txt: '#fde68a', glow: 8},
-                256: {bg: '#d97706', txt: '#ffffff', glow: 14},
-                512: {bg: '#701a75', txt: '#fbcfe8', glow: 12},
-                1024: {bg: '#2e1065', txt: '#e9d5ff', glow: 16},
+                2: {bg: '#1e293b', txt: '#f8fafc', glow: 0}, 4: {bg: '#334155', txt: '#f8fafc', glow: 0},
+                8: {bg: '#1e3a8a', txt: '#93c5fd', glow: 5}, 16: {bg: '#2563eb', txt: '#ffffff', glow: 8},
+                32: {bg: '#065f46', txt: '#a7f3d0', glow: 6}, 64: {bg: '#059669', txt: '#ffffff', glow: 10},
+                128: {bg: '#78350f', txt: '#fde68a', glow: 8}, 256: {bg: '#d97706', txt: '#ffffff', glow: 14},
+                512: {bg: '#701a75', txt: '#fbcfe8', glow: 12}, 1024: {bg: '#2e1065', txt: '#e9d5ff', glow: 16},
                 2048: {bg: '#be123c', txt: '#ffffff', glow: 22}
             };
 
@@ -508,7 +490,6 @@
                     ctx.restore();
                 }
             }
-            // Vẽ các hạt nổ nếu có
             updateAndRenderParticles();
             if(isGameRunning) gameLoopId = requestAnimationFrame(draw2048);
         }
@@ -518,7 +499,6 @@
             let moved = false;
             let rotatedGrid = grid2048;
 
-            // Xoay ma trận cấu trúc để dùng chung 1 logic vuốt sang trái (slide row left algorithm)
             if (dir === 'up') rotatedGrid = rotateMatrixCounterClockwise(grid2048);
             if (dir === 'right') rotatedGrid = rotateMatrixClockwise(rotateMatrixClockwise(grid2048));
             if (dir === 'down') rotatedGrid = rotateMatrixClockwise(grid2048);
@@ -530,7 +510,6 @@
                     if (row[i] === row[i + 1]) {
                         let mergedVal = row[i] * 2;
                         newRow.push(mergedVal); score2048 += mergedVal; i++; moved = true;
-                        // Tính toán tọa độ gần đúng để bùng nổ hiệu ứng hạt ăn điểm
                         createExplosion(canvas.width/2, canvas.height/2, '#f59e0b', 5);
                         if(mergedVal === 2048) {
                             isGameRunning = false;
@@ -548,7 +527,6 @@
                 rotatedGrid[r] = newRow;
             }
 
-            // Trả ma trận về hướng cũ ban đầu
             if (dir === 'up') grid2048 = rotateMatrixClockwise(rotatedGrid);
             else if (dir === 'right') grid2048 = rotateMatrixClockwise(rotateMatrixClockwise(rotatedGrid));
             else if (dir === 'down') grid2048 = rotateMatrixCounterClockwise(rotatedGrid);
@@ -560,7 +538,6 @@
             }
         }
 
-        // Các hàm phụ trợ thuật toán xoay ma trận xoay vòng
         function rotateMatrixClockwise(matrix) { return matrix[0].map((val, index) => matrix.map(row => row[index]).reverse()); }
         function rotateMatrixCounterClockwise(matrix) { return matrix[0].map((val, index) => matrix.map(row => row[row.length - 1 - index])); }
 
@@ -577,7 +554,7 @@
 
 
         // =====================================================================
-        // GAME 4: CHIẾN CƠ VŨ TRỤ (SPACE SHOOTER)
+        // GAME 4: CHIẾN CƠ VŨ TRỤ
         // =====================================================================
         let playerShip, lasers, enemies, enemyTimer, killCount;
 
@@ -588,7 +565,6 @@
             playerShip = { x: canvas.width / 2 - 18, y: canvas.height - 80, w: 36, h: 32, isDragging: false };
             enemyTimer = 0; killCount = 0;
 
-            // Xử lý kéo giữ điều khiển mượt mà đa nền tảng Touch/Mouse
             function onMove(clientX, clientY) {
                 let rect = canvas.getBoundingClientRect();
                 let rootX = (clientX - rect.left) * (canvas.width / rect.width);
@@ -598,80 +574,3 @@
             }
 
             canvas.onmousedown = () => playerShip.isDragging = true;
-            window.onmouseup = () => playerShip.isDragging = false;
-            canvas.onmousemove = (e) => { if(playerShip.isDragging) onMove(e.clientX, e.clientY); };
-
-            canvas.ontouchstart = () => playerShip.isDragging = true;
-            window.ontouchend = () => playerShip.isDragging = false;
-            canvas.ontouchmove = (e) => { if(playerShip.isDragging) onMove(e.touches[0].clientX, e.touches[0].clientY); };
-
-            function loop() {
-                if (!isGameRunning) return;
-                ctx.fillStyle = '#04040a'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Tự động khai hỏa liên hoàn Laser dài thanh mảnh
-                if (Math.random() > 0.88) lasers.push({ x: playerShip.x + playerShip.w/2 - 2, y: playerShip.y, w: 3.5, h: 14, speed: 7.5 });
-
-                // Vẽ Chiến Cơ của con trai bằng mã Vector
-                ctx.save(); ctx.shadowBlur = 10; ctx.shadowColor = '#f43f5e';
-                ctx.fillStyle = '#e11d48'; // Thân tàu đỏ rực
-                ctx.beginPath(); ctx.moveTo(playerShip.x + playerShip.w/2, playerShip.y);
-                ctx.lineTo(playerShip.x + playerShip.w, playerShip.y + playerShip.h);
-                ctx.lineTo(playerShip.x + playerShip.w/2, playerShip.y + playerShip.h * 0.78);
-                ctx.lineTo(playerShip.x, playerShip.y + playerShip.h); ctx.closePath(); ctx.fill();
-                // Đuôi lửa phản lực xanh lục cyan
-                ctx.fillStyle = '#22d3ee'; ctx.fillRect(playerShip.x + playerShip.w/2 - 3, playerShip.y + playerShip.h - 2, 6, 5);
-                ctx.restore();
-
-                // Quản lý Đạn Laser
-                for (let i = lasers.length - 1; i >= 0; i--) {
-                    let l = lasers[i]; l.y -= l.speed;
-                    if (l.y < 0) { lasers.splice(i, 1); continue; }
-                    ctx.fillStyle = '#38bdf8'; ctx.shadowBlur = 8; ctx.shadowColor = '#38bdf8';
-                    ctx.fillRect(l.x, l.y, l.w, l.h); ctx.restore();
-                }
-
-                // Sản sinh phi thuyền địch (quái vật ngoài hành tinh)
-                enemyTimer++;
-                if (enemyTimer > Math.max(25, 55 - killCount * 0.4)) {
-                    enemies.push({ x: Math.random() * (canvas.width - 30), y: -30, w: 28, h: 24, speed: 1.8 + Math.random() * 1.5 });
-                    enemyTimer = 0;
-                }
-
-                // Điều phối Địch quái vật
-                for (let i = enemies.length - 1; i >= 0; i--) {
-                    let e = enemies[i]; e.y += e.speed;
-                    if (e.y > canvas.height) { triggerGameOver(); return; } // Lọt lưới địch thua cuộc
-
-                    // Vẽ địch (Màu tím quái dị phát sáng)
-                    ctx.save(); ctx.shadowBlur = 8; ctx.shadowColor = '#a855f7'; ctx.fillStyle = '#a855f7';
-                    ctx.beginPath(); ctx.roundRect(e.x, e.y, e.w, e.h, 6); ctx.fill();
-                    ctx.fillStyle = '#ffffff'; ctx.fillRect(e.x + 5, e.y + 6, 4, 4); ctx.fillRect(e.x + e.w - 9, e.y + 6, 4, 4); // Cặp mắt quái vật
-                    ctx.restore();
-
-                    // Kiểm tra va chạm giữa Thân máy bay con và Địch
-                    if (playerShip.x < e.x + e.w && playerShip.x + playerShip.w > e.x &&
-                        playerShip.y < e.y + e.h && playerShip.y + playerShip.h > e.y) {
-                        createExplosion(e.x + e.w/2, e.y + e.h/2, '#ef4444', 25);
-                        triggerGameOver(); return;
-                    }
-
-                    // Kiểm tra đạn Laser bắn trúng Địch
-                    for (let j = lasers.length - 1; j >= 0; j--) {
-                        let l = lasers[j];
-                        if (l.x > e.x && l.x < e.x + e.w && l.y > e.y && l.y < e.y + e.h) {
-                            createExplosion(e.x + e.w/2, e.y + e.h/2, '#c084fc', 12); // Cháy nổ bung hạt tím
-                            enemies.splice(i, 1); lasers.splice(j, 1);
-                            killCount++; updateScore(killCount * 10);
-                            break;
-                        }
-                    }
-                }
-                updateAndRenderParticles();
-                gameLoopId = requestAnimationFrame(loop);
-            }
-            loop();
-        }
-    </script>
-</body>
-</html>
