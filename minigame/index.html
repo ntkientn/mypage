@@ -880,44 +880,57 @@
         }
 
         // =====================================================================
-        // GAME 6: PHÁ HỦY BỨC TƯỜNG (BẢN UPDATE: 6 CỤM SIÊU DÀY ĐẶC - SO LE)
+        // GAME 6: PHÁ HỦY BỨC TƯỜNG (MÔ ĐẦU CỤM 5 HÀNG - KHOẢNG TRỐNG 3 HÀNG)
         // =====================================================================
         let paddle, ball, bricks;
-        // Mở rộng ma trận lên 18 hàng và 14 cột để gạch phủ kín, dày đặc màn hình
-        const brickRows = 18, brickCols = 14, brickHeight = 9, brickPadding = 2.5, brickOffsetTop = 45, brickOffsetLeft = 10;
+        // Thiết lập ma trận 21 hàng để chứa 3 cụm (mỗi cụm 5 hàng, cách nhau 3 hàng trống)
+        const brickRows = 21, brickCols = 14, brickHeight = 8, brickPadding = 2.5, brickOffsetTop = 40, brickOffsetLeft = 10;
         
         function startBreakerGame() {
             document.getElementById('game-overlay').classList.add('hidden');
             if (gameLoopId) cancelAnimationFrame(gameLoopId);
             isGameRunning = true; score = 0; particles = [];
             
-            // Thanh đỡ tinh gọn
-            paddle = { x: canvas.width / 2 - 25, y: canvas.height - 40, w: 50, h: 8 };
-            // Bóng siêu nhỏ (radius: 3px) lách qua ma trận gạch dày đặc
+            // Thanh đỡ tinh chỉnh kích thước vừa phải
+            paddle = { x: canvas.width / 2 - 30, y: canvas.height - 40, w: 60, h: 8 };
+            // Quả bóng siêu nhỏ (radius: 3px) tối ưu cho việc di chuyển trong khe hẹp
             ball = { x: canvas.width / 2, y: canvas.height - 60, radius: 3, dx: 2.5, dy: -4.5 };
             
-            // Khởi tạo ma trận 6 cụm so le siêu dày
+            // Khởi tạo ma trận gạch cấu trúc so le cụm 5 hàng, khoảng trống 3 hàng
             bricks = [];
             for (let r = 0; r < brickRows; r++) {
                 bricks[r] = [];
                 for (let c = 0; c < brickCols; c++) {
                     let isBrick = false;
                     let isConcrete = false;
-                    
-                    // Xác định tầng cụm (mỗi cụm dày 4 hàng)
-                    let clusterIndex = Math.floor(r / 4); 
-                    
-                    // Cấu trúc so le: Cụm chẵn nằm trái (Cột 0->9), Cụm lẻ nằm phải (Cột 4->13)
-                    if (clusterIndex % 2 === 0) {
+                    let clusterIndex = 0;
+
+                    // CỤM 1: Từ hàng 0 đến hàng 4 (Dày 5 hàng) -> Nằm bên trái (Cột 0 -> 9)
+                    if (r >= 0 && r <= 4) {
+                        clusterIndex = 1;
                         if (c >= 0 && c <= 9) {
                             isBrick = true;
-                            // Gài gạch bê tông ở rìa góc khe của mỗi cụm
-                            if (r % 4 === 3 && c === 9) isConcrete = true;
+                            if (r === 4 && c === 9) isConcrete = true; // Gài gạch bê tông ở mép khe
                         }
-                    } else {
+                    }
+                    // KHOẢNG TRỐNG 1: Từ hàng 5 đến hàng 7 (Rộng bằng 3 hàng gạch) -> Bỏ trống hoàn toàn
+                    
+                    // CỤM 2: Từ hàng 8 đến hàng 12 (Dày 5 hàng) -> Nằm bên phải (Cột 4 -> 13)
+                    else if (r >= 8 && r <= 12) {
+                        clusterIndex = 2;
                         if (c >= 4 && c <= 13) {
                             isBrick = true;
-                            if (r % 4 === 0 && c === 4) isConcrete = true;
+                            if (r === 8 && c === 4) isConcrete = true; // Gài gạch bê tông ở mép khe dưới
+                        }
+                    }
+                    // KHOẢNG TRỐNG 2: Từ hàng 13 đến hàng 15 (Rộng bằng 3 hàng gạch) -> Bỏ trống hoàn toàn
+                    
+                    // CỤM 3: Từ hàng 16 đến hàng 20 (Dày 5 hàng) -> Nằm bên trái (Cột 0 -> 9)
+                    else if (r >= 16 && r <= 20) {
+                        clusterIndex = 3;
+                        if (c >= 0 && c <= 9) {
+                            isBrick = true;
+                            if (r === 20 && c === 9) isConcrete = true;
                         }
                     }
                     
@@ -930,7 +943,7 @@
                             cluster: clusterIndex
                         };
                     } else {
-                        // Đường đi trống dạng zic-zắc
+                        // Vùng trống hành lang và khe hở zic-zắc
                         bricks[r][c] = { status: 0, type: 'empty' };
                     }
                 }
@@ -951,11 +964,11 @@
                 if (!isGameRunning) return;
                 ctx.fillStyle = '#060813'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // Va chạm biên
+                // Va chạm biên tường và trần
                 if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) ball.dx = -ball.dx;
                 if (ball.y + ball.dy < ball.radius) ball.dy = -ball.dy;
 
-                // Va chạm thanh đỡ
+                // Va chạm thanh đỡ (Paddle)
                 if (ball.y + ball.dy > paddle.y - ball.radius) {
                     if (ball.x > paddle.x && ball.x < paddle.x + paddle.w) {
                         let hitPos = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
@@ -972,7 +985,7 @@
                 ball.x += ball.dx;
                 ball.y += ball.dy;
 
-                // Xử lý vẽ và kiểm tra va chạm ma trận gạch siêu dày
+                // Xử lý vẽ và kiểm tra va chạm ma trận gạch
                 let activeNormalBricks = 0;
                 const brickWidth = (canvas.width - (brickOffsetLeft * 2) - ((brickCols - 1) * brickPadding)) / brickCols;
 
@@ -988,7 +1001,7 @@
                         if (b.status === 1 || b.type === 'concrete') {
                             if (b.type === 'normal') activeNormalBricks++;
 
-                            // Xử lý va chạm chính xác hộp gạch dẹt (AABB)
+                            // Xử lý va chạm hộp gạch tinh xảo (AABB)
                             if (ball.x + ball.radius > bX && ball.x - ball.radius < bX + brickWidth &&
                                 ball.y + ball.radius > bY && ball.y - ball.radius < bY + brickHeight) {
                                 
@@ -998,24 +1011,25 @@
                                     b.status = 0;
                                     score += 10;
                                     updateScore(score);
-                                    createExplosion(bX + brickWidth/2, bY + brickHeight/2, '#a855f7', 6);
+                                    createExplosion(bX + brickWidth/2, bY + brickHeight/2, '#06b6d4', 6);
                                 } else {
-                                    // Gạch bê tông tóe lửa trắng khi chịu va đập
+                                    // Va chạm gạch bê tông lóe tia lửa trắng
                                     createExplosion(ball.x, ball.y, '#ffffff', 4);
                                 }
                             }
 
-                            // Render gạch
+                            // Vẽ gạch nghệ thuật theo cụm lớn
                             ctx.save();
                             if (b.type === 'concrete') {
+                                // Gạch bê tông bảo vệ lối vào khe màu xám thép kiên cố
                                 ctx.fillStyle = '#475569';
                                 ctx.strokeStyle = '#94a3b8';
                                 ctx.lineWidth = 1;
                                 ctx.beginPath(); ctx.roundRect(bX, bY, brickWidth, brickHeight, 1); ctx.fill(); ctx.stroke();
                             } else {
-                                // Màu sắc rực rỡ phân cấp theo tầng cụm rõ rệt
-                                const clusterColors = ['#f43f5e', '#a855f7', '#06b6d4', '#10b981', '#f59e0b'];
-                                ctx.fillStyle = clusterColors[b.cluster % clusterColors.length];
+                                // Gạch thường: Mỗi cụm dày dặn mang một tông màu Cyber đặc trưng
+                                const clusterColors = ['#000000', '#f43f5e', '#a855f7', '#06b6d4'];
+                                ctx.fillStyle = clusterColors[b.cluster];
                                 ctx.shadowBlur = 3; ctx.shadowColor = ctx.fillStyle;
                                 ctx.beginPath(); ctx.roundRect(bX, bY, brickWidth, brickHeight, 1); ctx.fill();
                             }
@@ -1024,12 +1038,12 @@
                     }
                 }
 
-                // Kiểm tra win
+                // Điều kiện thắng
                 if (activeNormalBricks === 0) {
                     isGameRunning = false;
                     setTimeout(() => {
                         document.getElementById('overlay-title').innerText = "HUYỀN THOẠI PHÁ GẠCH!";
-                        document.getElementById('overlay-desc').innerText = `Bé đã chinh phục pháo đài 6 cụm gạch so le siêu dày với: ${score} điểm!`;
+                        document.getElementById('overlay-desc').innerText = `Quá xuất sắc! Bé đã dọn sạch pháo đài gạch dày đặc so le với: ${score} điểm!`;
                         document.getElementById('game-overlay').classList.remove('hidden');
                     }, 300);
                     return;
@@ -1042,7 +1056,7 @@
                 ctx.beginPath(); ctx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 2); ctx.fill();
                 ctx.restore();
 
-                // Vẽ quả bóng
+                // Vẽ quả bóng siêu nhỏ phát sáng
                 ctx.save();
                 ctx.fillStyle = '#facc15';
                 ctx.shadowBlur = 5; ctx.shadowColor = '#facc15';
