@@ -176,21 +176,22 @@
         </div>
     </div>
 
-    <div id="game-view" class="relative z-10 w-full max-w-[440px] h-screen mx-auto flex flex-col justify-between py-3 px-4 hidden">
-        <div class="flex justify-between items-center bg-slate-900/70 border border-slate-800 px-4 py-2.5 rounded-xl backdrop-blur-md">
-            <button onclick="backToDashboard()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-lg cursor-pointer transition-colors">
-                <i class="fa-solid fa-angle-left mr-1"></i> HUB
+    <!-- GAME VIEW -->
+    <div id="game-view" class="relative z-50 w-full max-w-[440px] h-[100dvh] mx-auto flex flex-col justify-between pt-4 pb-3 px-4 hidden bg-[#04050e]">
+        <div class="flex justify-between items-center bg-slate-900/90 border border-slate-800 px-4 py-3 rounded-xl backdrop-blur-md shadow-lg sticky top-0 z-50">
+            <button onclick="backToDashboard()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs uppercase tracking-widest px-4 py-2 rounded-lg cursor-pointer transition-colors active:scale-95 shadow-md flex items-center gap-1.5">
+                <i class="fa-solid fa-house text-[10px]"></i> HUB
             </button>
-            <div class="flex gap-4 font-digital text-sm">
+            <div class="flex gap-4 font-digital text-sm tracking-wider">
                 <div>SCORE: <span id="live-score" class="text-cyan-400 font-bold">0</span></div>
                 <div>BEST: <span id="high-score" class="text-amber-400 font-bold">0</span></div>
             </div>
         </div>
 
-        <div class="flex-1 my-3 bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden relative shadow-[0_10px_30px_rgba(0,0,0,0.8)]" id="canvas-container">
-            <canvas id="gameCanvas" width="400" height="600" class="w-full h-full block"></canvas>
+        <div class="flex-1 my-3 bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden relative shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex items-center justify-center" id="canvas-container">
+            <canvas id="gameCanvas" width="400" height="600" class="w-full h-full object-contain block"></canvas>
             
-            <div id="game-overlay" class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center text-center p-6 space-y-5">
+            <div id="game-overlay" class="absolute inset-0 bg-slate-950/95 flex flex-col items-center justify-center text-center p-6 space-y-5 z-20">
                 <h2 id="overlay-title" class="text-2xl font-black tracking-wider text-white">TÊN TRÒ CHƠI</h2>
                 <p id="overlay-desc" class="text-xs text-slate-400 max-w-xs leading-relaxed">Hướng dẫn trò chơi.</p>
                 <button id="start-btn" class="bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-black text-xs uppercase tracking-widest px-6 py-3 rounded-xl shadow-lg active:scale-95 cursor-pointer transition-transform">
