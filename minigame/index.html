@@ -10,11 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
+        /* SỬA LẠI ĐOẠN NÀY: Xóa touch-action: none để cho phép cuộn trang */
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            touch-action: none; 
             user-select: none; 
-            /* Thay nền đen bằng Gradient Vũ trụ xanh tím cực bắt mắt cho trẻ em */
             background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 70%, #020617 100%);
             min-height: 100vh;
         }
@@ -234,13 +233,14 @@
             document.getElementById('live-score').innerText = score;
             currentHighScore = localStorage.getItem(`highscore_v2_${gameId}`) || 0;
             document.getElementById('high-score').innerText = currentHighScore;
+            document.body.style.touchAction = 'none';
             setupOverlayUI(gameId);
         }
 
         function backToDashboard() {
             isGameRunning = false;
             if (gameLoopId) cancelAnimationFrame(gameLoopId);
-            
+            document.body.style.touchAction = 'auto';
             // Giải phóng toàn bộ sự kiện kẹt
             canvas.onmousedown = null; canvas.ontouchstart = null;
             canvas.onmousemove = null; canvas.ontouchmove = null;
