@@ -671,13 +671,13 @@
                 // Đẩy máy bay lên trên con trỏ chuột 45px
                 const offsetY = 45;
                 
-                player.x = canvasX;
-                player.y = canvasY - offsetY;
+                playerShip.x = canvasX;
+                playerShip.y = canvasY - offsetY;
                 
-                if (player.x < 0) player.x = 0;
-                if (player.x > canvas.width) player.x = canvas.width;
-                if (player.y < 0) player.y = 0;
-                if (player.y > canvas.height) player.y = canvas.height;
+                if (playerShip.x < 0) playerShip.x = 0;
+                if (playerShip.x > canvas.width) playerShip.x = canvas.width;
+                if (playerShip.y < 0) playerShip.y = 0;
+                if (playerShip.y > canvas.height) playerShip.y = canvas.height;
             };
 
             canvas.ontouchstart = () => playerShip.isDragging = true;
@@ -698,14 +698,14 @@
                 // ĐIỀU CHỈNH QUAN TRỌNG: Đẩy máy bay lên TRÊN ngón tay 45px để không bị che
                 const offsetY = 45; 
                 
-                player.x = canvasX;
-                player.y = canvasY - offsetY; // Trừ đi offsetY để máy bay bay phía trên ngón tay
+                playerShip.x = canvasX;
+                playerShip.y = canvasY - offsetY; // Trừ đi offsetY để máy bay bay phía trên ngón tay
                 
                 // Giới hạn không cho máy bay bay lệch ra ngoài biên màn hình game
-                if (player.x < 0) player.x = 0;
-                if (player.x > canvas.width) player.x = canvas.width;
-                if (player.y < 0) player.y = 0;
-                if (player.y > canvas.height) player.y = canvas.height;
+                if (playerShip.x < 0) playerShip.x = 0;
+                if (playerShip.x > canvas.width) playerShip.x = canvas.width;
+                if (playerShip.y < 0) playerShip.y = 0;
+                if (playerShip.y > canvas.height) playerShip.y = canvas.height;
             };
             
             function loop() {
