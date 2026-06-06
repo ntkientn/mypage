@@ -207,20 +207,21 @@ body::after{
   margin-left:var(--sidebar);
   background:rgba(14,16,24,.95);
   border-top:1px solid var(--border);
-  padding:.85rem 2rem;
+  padding:.7rem 2rem;
   display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:.5rem;
+  gap:.5rem;
   font-size:.75rem;color:var(--txt3);
   position:relative;z-index:1;
   transition:margin .3s;
+  white-space:nowrap;
 }
-.footer-left{display:flex;align-items:center;gap:1rem}
+.footer-left{display:flex;align-items:center;gap:.6rem;flex-shrink:0;min-width:0;overflow:hidden}
 .footer-name{color:var(--txt2);font-weight:500}
-.footer-ver{background:var(--bg4);border:1px solid var(--border2);padding:2px 9px;border-radius:12px;font-size:.68rem;font-family:'IBM Plex Mono',monospace,sans-serif}
-.footer-right{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.footer-powered{display:flex;align-items:center;gap:.4rem}
-.footer-badge{display:inline-flex;align-items:center;gap:.25rem;background:var(--bg4);border:1px solid var(--border2);padding:2px 9px;border-radius:12px;font-size:.7rem;color:var(--txt2);font-weight:500;transition:.13s}
-.footer-badge:hover{border-color:var(--border2);color:var(--txt)}
+.footer-ver{background:var(--bg4);border:1px solid var(--border2);padding:2px 8px;border-radius:12px;font-size:.65rem;font-family:'IBM Plex Mono',monospace,sans-serif;flex-shrink:0}
+.footer-right{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+.footer-powered{display:flex;align-items:center;gap:.3rem}
+.footer-badge{display:inline-flex;align-items:center;gap:.2rem;background:var(--bg4);border:1px solid var(--border2);padding:2px 8px;border-radius:12px;font-size:.68rem;color:var(--txt2);font-weight:500;transition:.13s}
+.footer-badge:hover{color:var(--txt)}
 .footer-sep{color:var(--border2)}
 
 /* RESPONSIVE */
@@ -229,7 +230,17 @@ body::after{
   #sidebar{left:calc(-1 * var(--sidebar));box-shadow:4px 0 24px rgba(0,0,0,.5)}
   #sidebar.mobile-open{left:0}
   #main{margin-left:0}
-  #footer{margin-left:0}
+  #footer{
+    margin-left:0;
+    flex-direction:column;
+    align-items:flex-start;
+    padding:.65rem 1rem;
+    gap:.35rem;
+  }
+  .footer-left{gap:.45rem;font-size:.7rem}
+  .footer-ver{font-size:.62rem}
+  .footer-right{font-size:.68rem}
+  .footer-badge{font-size:.63rem;padding:1px 6px}
   #hamburger{display:block}
   #overlay.show{display:block}
   .content-area{padding:1.2rem}
@@ -237,7 +248,6 @@ body::after{
   .ins-grid{grid-template-columns:1fr}
   .markets-grid{grid-template-columns:1fr}
   .gold-rows{grid-template-columns:1fr 1fr}
-  .footer-right{display:none}
 }
 </style>
 </head>
@@ -346,18 +356,16 @@ body::after{
   <div class="footer-left">
     <span>© 2026</span>
     <span class="footer-name">Nguyen Trung Kien</span>
-    <span>— All rights reserved</span>
+    <span class="footer-sep">·</span>
+    <span>All rights reserved</span>
+    <span class="footer-sep">·</span>
     <span class="footer-ver">v1.2.20260605</span>
   </div>
   <div class="footer-right">
-    <span style="color:var(--txt3);font-size:.72rem">Powered by</span>
-    <div class="footer-powered">
-      <span class="footer-badge">🤖 Claude</span>
-      <span class="footer-sep">·</span>
-      <span class="footer-badge">✦ Gemini</span>
-    </div>
+    <span style="color:var(--txt3)">Powered by</span>
+    <span class="footer-badge">🤖 Claude</span>
     <span class="footer-sep">·</span>
-    <span style="color:var(--border2)">KIEN's News Hub</span>
+    <span class="footer-badge">✦ Gemini</span>
   </div>
 </footer>
 
@@ -507,46 +515,56 @@ function buildMarketGold(){
   <div id="gold-content"></div>`;
 }
 
-// Generate plausible daily data anchored to current price
-function genGoldHistory(currentPrice, days, isVN){
-  const pts=[];const labels=[];
-  const now=new Date();
-  // VN SJC roughly tracks world * VND_rate / 31.1 * 37.5 + premium
-  const base = isVN ? currentPrice*0.88 : currentPrice*0.82;
-  let p=base;
-  for(let i=days;i>=0;i--){
-    const d=new Date(now);d.setDate(d.getDate()-i);
-    if(i%Math.max(1,Math.floor(days/12))===0||i===0)
-      labels.push(d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'}));
-    else labels.push('');
-    const drift=(Math.random()-.46)*p*0.011;
-    p=Math.max(base*.75,Math.min(currentPrice*1.12,p+drift));
-    pts.push(Math.round(p));
+// Generate smooth, realistic price history.
+// Strategy: work BACKWARDS from currentPrice so the final point is always natural.
+// Use a geometric Brownian motion with mild mean-reversion to avoid extreme spikes.
+function genPriceHistory(currentPrice, days, dailyVol){
+  // dailyVol: fractional daily volatility, e.g. 0.008 for gold, 0.025 for BTC
+  const pts=[];
+  let p=currentPrice;
+  // Generate backwards: index 0 = oldest, last = today (currentPrice)
+  const raw=[p];
+  for(let i=0;i<days;i++){
+    const shock=(Math.random()+Math.random()+Math.random()-1.5)*dailyVol; // approx normal
+    const meanRev=0.015*(1-p/currentPrice); // gentle pull toward current
+    p=p*(1-shock-meanRev);
+    p=Math.max(currentPrice*0.5, Math.min(currentPrice*1.6, p));
+    raw.push(p);
   }
-  pts[pts.length-1]=Math.round(currentPrice);
-  return{labels,pts};
+  raw.reverse(); // now oldest→newest, last element = currentPrice naturally
+  raw[raw.length-1]=currentPrice; // ensure exact
+
+  // Build labels: only show every ~days/10 ticks to avoid clutter
+  const now=new Date();
+  const labels=raw.map((_,i)=>{
+    const daysAgo=days-i;
+    const d=new Date(now);d.setDate(d.getDate()-daysAgo);
+    const tick=Math.max(1,Math.floor(days/10));
+    return(daysAgo%tick===0||daysAgo===0)?d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'}):'';
+  });
+  return{labels,pts:raw.map(v=>Math.round(v))};
 }
 
 function drawGoldChartVN(price, period){
   const ctx=document.getElementById('goldChartVN');if(!ctx)return;
   if(window._goldChartVNInst){window._goldChartVNInst.destroy();window._goldChartVNInst=null;}
   const days=period==='3mo'?90:period==='6mo'?180:365;
-  const {labels,pts}=genGoldHistory(price,days,true);
+  const {labels,pts}=genPriceHistory(price,days,0.007); // gold ~0.7% daily vol
   window._goldChartVNInst=new Chart(ctx,{
     type:'line',data:{labels,datasets:[{data:pts,borderColor:'#f5a623',backgroundColor:'rgba(245,166,35,.12)',borderWidth:2,fill:true,tension:.4,pointRadius:0}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${(c.parsed.y/1e6).toFixed(2)} Tr VNĐ/lượng`}}},
-      scales:{x:{ticks:{color:'#6b7090',maxRotation:0,font:{size:10}},grid:{display:false}},y:{ticks:{color:'#6b7090',font:{size:10},callback:v=>(v/1e6).toFixed(0)+'M'},grid:{color:'rgba(42,45,62,.8)'}}}}
+      scales:{x:{ticks:{color:'#6b7090',maxRotation:0,font:{size:10},maxTicksLimit:10},grid:{display:false}},y:{ticks:{color:'#6b7090',font:{size:10},callback:v=>(v/1e6).toFixed(0)+'M'},grid:{color:'rgba(42,45,62,.7)'}}}}
   });
 }
 function drawGoldChartWorld(price, period){
   const ctx=document.getElementById('goldChartWorld');if(!ctx)return;
   if(window._goldChartWInst){window._goldChartWInst.destroy();window._goldChartWInst=null;}
   const days=period==='3mo'?90:period==='6mo'?180:365;
-  const {labels,pts}=genGoldHistory(price,days,false);
+  const {labels,pts}=genPriceHistory(price,days,0.007);
   window._goldChartWInst=new Chart(ctx,{
     type:'line',data:{labels,datasets:[{data:pts,borderColor:'#22d3ee',backgroundColor:'rgba(34,211,238,.08)',borderWidth:2,fill:true,tension:.4,pointRadius:0}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`$${c.parsed.y.toLocaleString('en-US')}/oz`}}},
-      scales:{x:{ticks:{color:'#6b7090',maxRotation:0,font:{size:10}},grid:{display:false}},y:{ticks:{color:'#6b7090',font:{size:10},callback:v=>'$'+v.toLocaleString('en-US')},grid:{color:'rgba(42,45,62,.8)'}}}}
+      scales:{x:{ticks:{color:'#6b7090',maxRotation:0,font:{size:10},maxTicksLimit:10},grid:{display:false}},y:{ticks:{color:'#6b7090',font:{size:10},callback:v=>'$'+v.toLocaleString('en-US')},grid:{color:'rgba(42,45,62,.7)'}}}}
   });
 }
 
@@ -731,23 +749,7 @@ function buildMarketCrypto(){
   <div id="crypto-content"></div>`;
 }
 
-// Generate BTC price history anchored to current price, simulating realistic range
-function genBTCHistory(currentPrice, days){
-  const labels=[],pts=[];const now=new Date();
-  // BTC is ~3x volatile vs gold; start from lower base
-  const base=currentPrice*0.55;let p=base;
-  for(let i=days;i>=0;i--){
-    const d=new Date(now);d.setDate(d.getDate()-i);
-    const tick=Math.floor(days/10);
-    if(i%Math.max(1,tick)===0||i===0)labels.push(d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'}));
-    else labels.push('');
-    const drift=(Math.random()-.44)*p*0.03;
-    p=Math.max(base*.5,Math.min(currentPrice*1.08,p+drift));
-    pts.push(Math.round(p));
-  }
-  pts[pts.length-1]=Math.round(currentPrice);
-  return{labels,pts};
-}
+// BTC chart now uses genPriceHistory with higher volatility (crypto ~2.5% daily)
 
 async function loadMarketCrypto(){
   const el=document.getElementById('crypto-content');if(!el)return;
@@ -816,11 +818,11 @@ function drawBTCChart(price,period){
   const ctx=document.getElementById('btcChart');if(!ctx)return;
   if(window._btcChartInst){window._btcChartInst.destroy();window._btcChartInst=null;}
   const days=period==='3mo'?90:period==='6mo'?180:365;
-  const {labels,pts}=genBTCHistory(price,days);
+  const {labels,pts}=genPriceHistory(price,days,0.025); // BTC ~2.5% daily vol
   window._btcChartInst=new Chart(ctx,{
     type:'line',data:{labels,datasets:[{data:pts,borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,.1)',borderWidth:2,fill:true,tension:.35,pointRadius:0}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`$${c.parsed.y.toLocaleString('en-US')}`}}},
-      scales:{x:{ticks:{color:'#6b7090',maxRotation:0,font:{size:10}},grid:{display:false}},y:{ticks:{color:'#6b7090',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'K'},grid:{color:'rgba(42,45,62,.8)'}}}}
+      scales:{x:{ticks:{color:'#6b7090',maxRotation:0,font:{size:10},maxTicksLimit:10},grid:{display:false}},y:{ticks:{color:'#6b7090',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'K'},grid:{color:'rgba(42,45,62,.7)'}}}}
   });
 }
 function switchBtcTab(btn,period,price){
