@@ -26,13 +26,12 @@
         .carousel-container {
             position: relative;
             width: 100%;
-            max-width: 680px;
-            height: 220px;
+            max-width: 680px; /* Khống chế độ rộng vừa vặn */
+            height: 270px;    /* Tăng chiều cao để tấm giữa scale lên 1.1 không bao giờ mất viền */
             margin: 1.5rem auto;
             overflow: hidden;
-            /* Đảm bảo container mở cổng nhận click tuyệt đối */
             pointer-events: auto !important; 
-            z-index: 999; /* Đẩy lên tầng cao nhất để không bị cái gì đè */
+            z-index: 999;
         }
         .carousel-track {
             position: relative;
@@ -44,47 +43,77 @@
         }
         .carousel-item {
             position: absolute;
-            top: 10px;
-            bottom: 10px;
-            left: 32.5%;
-            width: 35%;
-            height: calc(100% - 20px);
-            transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            /* Tạo khoảng lùi cố định 20px trên dưới để KHOE TRỌN VIỀN ảnh active khi phóng to */
+            top: 35px;
+            bottom: 35px;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-in-out;
             border-radius: 14px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.7);
             opacity: 0;
-            transform: translateX(0) scale(0.4);
+            background-color: #292961;
             cursor: pointer;
             pointer-events: auto !important;
+            
+            /* CẤU HÌNH GỌN GÀNG CHO MOBILE (KHÔNG TRÀN BIÊN) */
+            left: 30%;   /* Khung ảnh chiếm vị trí trung tâm */
+            width: 40%;  /* Độ rộng ảnh vừa vặn 60% màn hình điện thoại */
+            transform: translateX(0) scale(0.4);
         }
-        /* Tấm ở giữa: To rõ nét */
+        
+        /* Tấm ở giữa: To nhất, nổi bật ở tầng trên cùng (z-index: 10) và khoe trọn vẹn viền */
         .carousel-item.active {
             opacity: 1;
-            transform: translateX(0) scale(1.1);
-            z-index: 10;
+            transform: translateX(0) scale(1.1); /* Phóng to vừa vặn trong khoảng top/bottom 20px */
+            z-index: 10; /* Nằm trên cùng đè lên các ảnh 2 bên */
             border: 2px solid rgba(34, 211, 238, 0.9);
             box-shadow: 0 0 25px rgba(34, 211, 238, 0.5);
             cursor: default;
         }
-        /* Tấm bên trái: Dịch mượt và nhận click */
+        
+        /* Tấm bên trái trên Mobile: Thu nhỏ lại, ép dịch chuyển ít đi để nằm gọn trong màn hình */
         .carousel-item.prev {
-            opacity: 0.45;
-            transform: translateX(-105%) scale(0.8);
-            z-index: 5;
+            opacity: 0.35;
+            transform: translateX(-95%) scale(0.75); /* Giảm từ -90% xuống -55% để không bị lọt ra ngoài */
+            z-index: 5; /* Nằm dưới tấm active nên chấp nhận bị che một phần */
         }
-        /* Tấm bên phải: Dịch mượt và nhận click */
+        
+        /* Tấm bên phải trên Mobile: Thu nhỏ lại, ép dịch chuyển ít đi để nằm gọn trong màn hình */
         .carousel-item.next {
-            opacity: 0.45;
-            transform: translateX(105%) scale(0.8);
-            z-index: 5;
+            opacity: 0.35;
+            transform: translateX(95%) scale(0.75);  /* Giảm từ 90% xuống 55% để không bị lọt ra ngoài */
+            z-index: 5; /* Nằm dưới tấm active nên chấp nhận bị che một phần */
         }
+
+        /* THIẾT LẬP TỐI ƯU RIÊNG CHO DESKTOP / MÀN HÌNH LỚN */
+        @media (min-width: 768px) {
+            .carousel-container {
+                max-width: 900px;
+                height: 280px;
+            }
+            .carousel-item {
+                left: 32.5%;
+                width: 35%; /* PC rộng rãi cho ảnh chiếm 45% */
+            }
+            .carousel-item.active {
+                transform: translateX(0) scale(1.12);
+            }
+            .carousel-item.prev {
+                opacity: 0.45;
+                transform: translateX(-100%) scale(0.7); /* Trên PC biên rộng nên đẩy ra nhìn thoáng hơn */
+            }
+            .carousel-item.next {
+                opacity: 0.45;
+                transform: translateX(100%) scale(0.7);
+            }
+        }
+
         .carousel-item img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            background-color: #2a2b5f;
-            pointer-events: none !important; /* Click xuyên qua ảnh để thẻ cha nhận lệnh */
+            background-color: #262761;
+            pointer-events: none !important;
             -webkit-user-drag: none !important;
         }
         canvas { max-width: 100%; max-height: 100%; display: block; }
