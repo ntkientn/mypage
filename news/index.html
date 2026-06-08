@@ -54,22 +54,71 @@ body::after{
 #header,#sidebar,#main,#overlay{position:relative;z-index:1}
 
 /* HEADER */
-#header{
-  position:fixed;top:0;left:0;right:0;height:var(--header);
-  background:rgba(22,24,33,.92);backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(79,142,247,.15);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 1.2rem;z-index:200;gap:1rem
+/* ── HEADER CẤU TRÚC MỚI (DESKTOP) ── */
+/* ── HEADER CẤU TRÚC MỚI (DESKTOP) ── */
+#header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header);
+  background: rgba(22, 24, 33, 0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(79, 142, 247, 0.15);
+  display: flex; 
+  flex-direction: row;          /* Thụt thẳng hàng ngang trên Desktop */
+  align-items: center; 
+  justify-content: space-between;
+  z-index: 200; padding: 0 1.2rem;
 }
-.logo{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;white-space:nowrap;letter-spacing:-.3px}
-.logo span{color:var(--accent)}
-.logo small{font-family:'IBM Plex Sans',sans-serif;font-size:.7rem;font-weight:300;color:var(--txt3);display:block;margin-top:-2px;letter-spacing:1px;text-transform:uppercase}
-.header-right{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
-.date-chip{font-size:.8rem;color:var(--txt3);white-space:nowrap}
-.refresh-all{background:var(--accent);color:#fff;border:none;padding:6px 16px;border-radius:5px;font-size:.85rem;font-weight:500;display:flex;align-items:center;gap:5px;transition:.15s}
-.refresh-all:hover{background:var(--accent2)}
-#hamburger{display:none;background:none;border:1px solid var(--border2);color:var(--txt2);padding:5px 9px;border-radius:5px;font-size:1.2rem}
 
+/* Trên Desktop: Hiển thị dòng chứa nút Back tự nhiên, đứng song song với dòng chính */
+.hdr-top-row { 
+  display: flex; 
+  align-items: center;
+}
+.hdr-main-row {
+  display: flex; align-items: center; justify-content: space-between; flex: 1; position: relative;
+}
+.hdr-left, .hdr-right { display: flex; align-items: center; gap: .7rem; flex-shrink: 0; }
+.hdr-center { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; }
+/* STYLE TEXT CLICKABLE CHO BUTTON BACKNET */
+.btn-backnet {
+  font-size: .8rem; font-weight: 500; color: var(--txt2);
+  display: inline-flex; align-items: center; gap: 4px;
+  transition: color .15s; white-space: nowrap; position: relative;
+}
+.btn-backnet:hover { color: var(--accent); }
+.btn-backnet::after {
+  content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 1px;
+  bottom: -2px; left: 0; background-color: var(--accent);
+  transform-origin: bottom right; transition: transform 0.2s ease-out;
+}
+.btn-backnet:hover::after { transform: scaleX(1); transform-origin: bottom left; }
+
+.logo{
+  font-family:'Playfair Display',serif;font-size:1.35rem;
+  font-weight:700;white-space:nowrap;letter-spacing:-.3px;
+  text-align:center;
+}
+.logo span{color:var(--accent)}
+.logo small{
+  font-family:'IBM Plex Sans',sans-serif;font-size:.7rem;
+  font-weight:300;color:var(--txt3);display:block;
+  margin-top:-2px;letter-spacing:1px;text-transform:uppercase;
+}
+
+
+.date-chip{
+  font-size:.8rem;color:var(--txt3);white-space:nowrap;
+}
+/* refresh-all và hamburger giữ nguyên nhưng bỏ refresh-all khỏi header HTML */
+.refresh-all{
+  background:var(--accent);color:#fff;border:none;
+  padding:6px 16px;border-radius:5px;font-size:.85rem;
+  font-weight:500;display:flex;align-items:center;gap:5px;transition:.15s;
+}
+.refresh-all:hover{background:var(--accent2)}
+#hamburger{
+  display:none;background:none;border:1px solid var(--border2);
+  color:var(--txt2);padding:5px 9px;border-radius:5px;font-size:1.2rem;
+}
 /* SIDEBAR */
 #sidebar{
   position:fixed;top:var(--header);left:0;bottom:0;width:var(--sidebar);
@@ -226,46 +275,112 @@ body::after{
 
 /* RESPONSIVE */
 @media(max-width:768px){
-  :root{--sidebar:260px}
-  #sidebar{left:calc(-1 * var(--sidebar));box-shadow:4px 0 24px rgba(0,0,0,.5)}
-  #sidebar.mobile-open{left:0}
-  #main{margin-left:0}
-  #footer{
-    margin-left:0;
-    flex-direction:column;
-    align-items:flex-start;
-    padding:.65rem 1rem;
-    gap:.35rem;
+  /* Tăng chiều cao Header trên mobile thành 90px để chứa đủ 2 dòng độc lập */
+  :root {
+    --header: 90px;
+    --sidebar: 260px;
   }
-  .footer-left{gap:.45rem;font-size:.7rem}
-  .footer-ver{font-size:.62rem}
-  .footer-right{font-size:.68rem}
-  .footer-badge{font-size:.63rem;padding:1px 6px}
-  #hamburger{display:block}
-  #overlay.show{display:block}
-  .content-area{padding:1.2rem}
-  .art-grid{grid-template-columns:1fr}
-  .ins-grid{grid-template-columns:1fr}
-  .markets-grid{grid-template-columns:1fr}
-  .gold-rows{grid-template-columns:1fr 1fr}
+  
+  #header {
+    padding: 0.4rem 1rem;
+    flex-direction: column;    /* Chuyển thành xếp chồng 2 dòng trên mobile */
+    justify-content: flex-start;
+    gap: 4px;
+  }
+
+  /* HIỂN THỊ PHÂN DÒNG TRÊN MOBILE */
+  .hdr-top-row {
+    display: flex;
+    justify-content: flex-start; 
+    width: 100%;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(255,255,255,0.03); 
+  }
+  
+  .hdr-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Trả các phần tử dòng 2 về luồng tự nhiên (Hủy Absolute của desktop) */
+  .hdr-center {
+    position: static;
+    transform: none;
+    text-align: left;
+    flex: 1;
+    margin-left: 0.8rem;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+    text-align: left;
+  }
+  .logo small {
+    font-size: .6rem; /* Thu nhỏ slogan thay vì ẩn hẳn để layout cân đối */
+  }
+
+  /* Hiện lại Date chip và căn chỉnh cho gọn ở góc phải dòng 2 */
+  .hdr-right {
+    display: flex;
+    margin-left: auto;
+  }
+  .date-chip {
+    font-size: .75rem;
+    color: var(--txt3);
+  }
+
+  #hamburger {
+    display: block;
+  }
+
+  /* Điều chỉnh các phần layout phụ thuộc vào vị trí header */
+  #sidebar {
+    left: calc(-1 * var(--sidebar));
+    top: var(--header);
+    box-shadow: 4px 0 24px rgba(0,0,0,.5);
+  }
+  #sidebar.mobile-open { left: 0; }
+  #main { margin-left: 0; padding-top: var(--header); }
+  
+  #footer {
+    margin-left: 0; flex-direction: column; align-items: flex-start;
+    padding: .65rem 1rem; gap: .35rem;
+  }
+  .footer-left { gap: .45rem; font-size: .7rem; }
+  .footer-ver { font-size: .62rem; }
+  .footer-right { font-size: .68rem; }
+  .footer-badge { font-size: .63rem; padding: 1px 6px; }
+  #overlay.show { display: block; }
+  .content-area { padding: 1.2rem; }
+  .art-grid, .ins-grid, .markets-grid { grid-template-columns: 1fr; }
+  .gold-rows { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- HEADER CẤU TRÚC MỚI: PHÂN TẦNG CHO MOBILE -->
 <div id="header">
-  <div style="display:flex;align-items:center;gap:.8rem">
-    <button id="hamburger" onclick="toggleSidebar()">☰</button>
-    <div class="logo">KIEN's <span>News Hub</span>
-      <small>Stay Informed. Stay Inspired.</small>
-    </div>
+  <!-- Dòng 1: Chỉ dành riêng cho Back to WebNet -->
+  <div class="hdr-top-row">
+    <a href="https://ntkientn.github.io/mypage/webnet.html" class="btn-backnet">← Back to WebNet</a>
   </div>
-  <div class="header-right">
-    <span class="date-chip" id="dateChip"></span>
-    <button class="refresh-all" onclick="refreshCurrent()">
-      <span id="refreshIcon">↻</span> Làm mới
-    </button>
+  
+  <!-- Dòng 2: Thanh điều hướng chính (Menu, Logo, Date) -->
+  <div class="hdr-main-row">
+    <div class="hdr-left">
+      <button id="hamburger" onclick="toggleSidebar()">☰</button>
+    </div>
+    <div class="hdr-center">
+      <div class="logo">KIEN's <span>News Hub</span>
+        <small>Stay Informed. Stay Inspired.</small>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <span class="date-chip" id="dateChip"></span>
+    </div>
   </div>
 </div>
 
