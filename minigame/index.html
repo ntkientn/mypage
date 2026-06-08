@@ -116,6 +116,27 @@
             pointer-events: none !important;
             -webkit-user-drag: none !important;
         }
+        /* --- TEXT LINK BACK TO WEBNET TỐI GIẢN --- */
+        .link-back-webnet {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px; /* Khoảng cách giữa icon mũi tên và chữ */
+            color: #64748b; /* Mặc định là màu xám mờ tinh tế, không làm phân tâm */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.08em; /* Giãn chữ nhẹ chuẩn style giao diện hiện đại */
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        /* HIỆU ỨNG HOVER: Chữ và icon đổi sắc xanh Cyan và phát sáng nhẹ */
+        .link-back-webnet:hover {
+            color: #22d3ee;
+            text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+            transform: translateX(-2px); /* Nhẹ nhàng dịch sang trái 1 chút tạo hiệu ứng chỉ đường */
+        }
         canvas { max-width: 100%; max-height: 100%; display: block; }
     </style>
 </head>
@@ -125,9 +146,18 @@
 
         <div id="dashboard-view" class="max-w-4xl mx-auto px-4 py-6 tech-grid min-height-screen">
         <header class="text-center mb-8 relative">
+            
+            <div class="w-full flex justify-center md:justify-start px-1 pt-1 relative z-[9999]">
+                <a href="https://ntkientn.github.io/mypage/webnet.html" class="link-back-webnet">
+                    <i class="fa-solid fa-arrow-left-long"></i>
+                    <span>Back to WebNet</span>
+                </a>
+            </div>
+            
             <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-48 h-48 bg-indigo-500/20 blur-3xl rounded-full"></div>
+            
             <h1 class="text-3xl sm:text-4xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-500 to-yellow-400 drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)] font-digital">
-                🚀 KHANG'S ARCADE HUB 🎮
+                <br>🚀 KHANG'S ARCADE HUB 🎮
             </h1>
             <p class="text-xs sm:text-base text-indigo-200 mt-2 font-medium tracking-wide">
                 Mini-game cho khối nghỉ hè <br>
