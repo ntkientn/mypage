@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kien WebNet - Cyber Workspace</title>
+    <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -302,7 +303,6 @@
             color: #fff;
         }
 
-        /* CSS Dòng mô tả chi tiết của Card */
         .card-desc {
             font-size: 0.85rem;
             color: var(--text-muted);
@@ -395,6 +395,7 @@
 </head>
 <body>
 
+    <!-- DIGITAL SYSTEM BACKGROUND -->
     <div class="cyber-bg-system">
         <div class="digital-grid"></div>
         <div class="ambient-orb"></div>
@@ -405,6 +406,7 @@
     </div>
 
     <div class="container">
+        <!-- HEADER -->
         <header>
             <div class="header-left">
                 <div class="avatar-box">
@@ -427,8 +429,10 @@
             </div>
         </header>
 
+        <!-- GRID PLATFORM -->
         <main class="web-grid" id="linksGrid">
-            </main>
+            <!-- Dynamic Injection -->
+        </main>
 
         <footer>
             <p>&copy; 2026 Kien WebNet. Node Topology Matrix System.</p>
@@ -436,14 +440,14 @@
     </div>
 
     <script>
-        // DATA HỆ THỐNG MỚI ĐÃ SỬA ICON VÀ THÊM DÒNG DESCRIBE (MÔ TẢ ĐƠN GIẢN)
+        // CẬP NHẬT CHÍNH XÁC CONFIG TÊN "PM DECK" VÀ TRANG CON THEO YÊU CẦU
         const webPages = [
             {
                 title: "Nguyen Trung Kien Portfolio",
                 description: "Thông tin sự nghiệp, năng lực cốt lõi và các chứng chỉ chuyên môn cá nhân.",
                 url: "https://ntkientn.github.io/mypage/",
                 icon: "fa-user-tie",
-                status: "live", // "live" | "error" | "maintenance" | "offline"
+                status: "live", 
                 tags: ["Personal", "Portfolio"],
                 subpages: []
             },
@@ -475,15 +479,16 @@
                 subpages: []
             },
             {
-                title: "PM Center",
-                description: "Hệ thống quản lý dự án chuyên sâu, tư vấn và kiểm soát các công cụ điều hành.",
+                title: "PM Deck", // ĐÃ ĐỔI TÊN CHÍNH XÁC SANG PM DECK
+                description: "Hệ thống quản lý dự án thực chiến, trạm chỉ huy quy trình và công cụ điều hành.",
                 url: "https://ntkientn.github.io/mypage/pmcenter/",
-                icon: "fa-chart-simple", // ĐÃ SỬA LẠI CLASS ICON FONT-AWESOME CHUẨN XÁC
-                status: "live",
+                icon: "fa-chart-simple", 
+                status: "maintenance",
                 tags: ["Management", "Professional"],
                 subpages: [
-                    { title: "PM Tool Advisor", url: "https://ntkientn.github.io/mypage/pmcenter/pmtool.html" },
-                    { title: "PM Tools List", url: "https://ntkientn.github.io/mypage/pmcenter/pmtool.html" }
+                    // ĐÃ ĐỔI TÊN CÁC TRANG SUBPAGES ĐÚNG CHUẨN UX CỦA BẠN
+                    { title: "PM Tool Advisor", url: "https://ntkientn.github.io/mypage/pmcenter/pmtooladvisor.html" },
+                    { title: "PM Tools Reference", url: "https://ntkientn.github.io/mypage/pmcenter/pmtoolsref.html" }
                 ]
             }
         ];
@@ -529,7 +534,7 @@
                     page.subpages.forEach(sub => {
                         sublinksHTML += `
                             <div class="sublink-item" onclick="navigate(event, '${sub.url}', false)">
-                                <span><i class="fa-solid fa-link" style="margin-right: 6px; color: var(--accent-cyan); font-size:10px;"></i>${sub.title}</span>
+                                <span><i class="fa-solid fa-square-poll-horizontal" style="margin-right: 6px; color: var(--accent-cyan); font-size:11px;"></i>${sub.title}</span>
                                 <div class="sublink-target-blank-btn" onclick="navigate(event, '${sub.url}', true)" title="Mở trong tab mới">
                                     <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px;"></i>
                                 </div>
