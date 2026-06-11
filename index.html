@@ -474,46 +474,43 @@
     </script>
     
     <!-- KHU VỰC CẤU HÌNH GIAO DIỆN DIFY -->
+    <!-- CẤU HÌNH ĐỊNH VỊ DIFY AN TOÀN TUYỆT ĐỐI - KHÔNG XUNG ĐỘT TỌA ĐỘ -->
     <style>
         /* ======================================================== */
-        /* 1. ĐỊNH VỊ TRÊN MÁY TÍNH (DESKTOP)                       */
+        /* 1. HIỂN THỊ TRÊN MÁY TÍNH (DESKTOP)                      */
         /* ======================================================== */
         
-        /* Ghim nút bấm chat của Dify ở góc phải dưới, cách lề một khoảng vừa vặn */
+        /* Ghim nút bấm ở góc phải dưới */
         html body #dify-chatbot-bubble-button {
             position: fixed !important;
             bottom: 2rem !important;
             right: 2rem !important;
-            z-index: 999999 !important; /* Đảm bảo luôn nổi lên trên các thành phần khác */
-            top: auto !important;
-            left: auto !important;
+            z-index: 999999 !important;
         }
         
-        /* Ghim khung chat của Dify xuất hiện ngay phía trên nút bấm */
+        /* Ghim khung chat ở góc phải dưới - Loại bỏ hoàn toàn trục 'top' để tránh lỗi đụng nóc */
         html body #dify-chatbot-bubble-window {
             position: fixed !important;
-            bottom: 6.5rem !important; /* Khoảng cách an toàn để không đè lên nút bấm */
+            bottom: 6.5rem !important;
             right: 2rem !important;
             z-index: 999999 !important;
-            top: auto !important;
-            left: auto !important;
         }
 
         /* ======================================================== */
-        /* 2. ĐỊNH VỊ TRÊN ĐIỆN THOẠI (MOBILE)                      */
+        /* 2. HIỂN THỊ TRÊN ĐIỆN THOẠI (MOBILE)                     */
         /* ======================================================== */
         @media (max-width: 640px) {
-            /* Thu nhỏ khoảng cách lề trên Mobile để tối ưu không gian hiển thị */
             html body #dify-chatbot-bubble-button {
                 bottom: 1rem !important;
                 right: 1rem !important;
             }
             
+            /* Khắc phục triệt để lỗi tràn cạnh trên mobile bằng cách giới hạn chiều cao tự nhiên */
             html body #dify-chatbot-bubble-window {
                 bottom: 5rem !important;
                 right: 1rem !important;
-                /* Trả lại không gian co giãn tự nhiên theo thiết bị di động của Dify */
-                max-width: calc(100% - 2rem) !important; 
+                max-width: calc(100% - 2rem) !important;
+                max-height: 75vh !important; /* Giới hạn chiều cao tối đa bằng 75% màn hình điện thoại, không bao giờ vượt quá cạnh trên */
             }
         }
     </style>
