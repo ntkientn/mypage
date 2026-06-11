@@ -473,87 +473,98 @@
         defer>
     </script>
     
-    <style>
-        /* ======================================================== */
-        /* 1. KHÓA CỐ ĐỊNH TRÊN MÁY TÍNH (DESKTOP)                  */
-        /* ======================================================== */
-        
-        /* Ghim chặt nút bấm chat ở góc phải dưới */
-        html body #dify-chatbot-bubble-button {
-            background-color: #1C64F2 !important;
-            position: fixed !important;
-            bottom: 2rem !important;
-            right: 2rem !important;
-            z-index: 999999 !important;
-            top: auto !important;
-            left: auto !important;
-            transform: none !important;
-        }
-        
-        /* KHÓA CHA: Ép khung bọc ngoài cố định tọa độ và kích thước lớn */
-        html body #dify-chatbot-bubble-window {
-            position: fixed !important;
-            width: 24rem !important;   /* Chiều rộng ô chat lớn */
-            height: 40rem !important;  /* Chiều cao ô chat lớn */
-            bottom: 6.5rem !important; /* Ghim cứng phía trên nút bấm */
-            right: 2rem !important;
-            z-index: 999999 !important;
-            top: auto !important;
-            left: auto !important;
-            transform: none !important; /* Triệt tiêu hoàn toàn hiệu ứng dịch chuyển làm giật khung */
-            margin: 0 !important;
-            padding: 0 !important;
-        }
+    <!-- GIẢI PHÁP CANH GÁC DOM (MUTATION OBSERVER) ĐỂ KHÓA KÍCH THƯỚC DIFY -->
+    <script>
+        (function() {
+            // Định nghĩa kích thước cố định mà anh mong muốn (Kích thước lớn)
+            const DESKTOP_WIDTH = '24rem';
+            const DESKTOP_HEIGHT = '40rem';
+            const DESKTOP_BOTTOM = '6.5rem';
+            const DESKTOP_RIGHT = '2rem';
 
-        /* KHÓA CON: Ép Iframe bên trong khít hoàn toàn với khung cha, chống tự resize */
-        html body #dify-chatbot-bubble-window iframe,
-        html body iframe[src*="udify.app/chatbot"] {
-            position: absolute !important;
-            width: 100% !important;    /* Chiếm trọn vẹn 100% khung cha đã khóa */
-            height: 100% !important;   /* Chiếm trọn vẹn 100% khung cha đã khóa */
-            top: 0 !important;
-            left: 0 !important;
-            bottom: auto !important;
-            right: auto !important;
-            transform: none !important;
-            margin: 0 !important;
-        }
+            const MOBILE_WIDTH = '85%';
+            const MOBILE_HEIGHT = '65%';
+            const MOBILE_BOTTOM = '5.5rem';
+            const MOBILE_RIGHT = '1.5rem';
 
-        /* Cho phép nút Close (X) hoạt động ẩn/đóng mượt mà không bị kẹt */
-        html body #dify-chatbot-bubble-window[style*="display: none"],
-        html body #dify-chatbot-bubble-window[hidden] {
-            display: none !important;
-        }
+            // Hàm ép kiểu dáng cố định, không cho script Dify tự ý thay đổi
+            function enforceChatStyles() {
+                const chatWindow = document.getElementById('dify-chatbot-bubble-window');
+                if (!chatWindow) return;
 
-        /* ======================================================== */
-        /* 2. KHÓA CỐ ĐỊNH THEO TỶ LỆ TRÊN ĐIỆN THOẠI (MOBILE)      */
-        /* ======================================================== */
-        @media (max-width: 640px) {
-            html body #dify-chatbot-bubble-button {
-                bottom: 1.5rem !important;
-                right: 1.5rem !important;
+                // Kiểm tra xem đang là Mobile hay Desktop
+                const isMobile = window.innerWidth <= 640;
+
+                // Nếu cửa sổ chat đang bị ẩn (người dùng bấm nút Close), giữ nguyên trạng thái ẩn
+                if (chatWindow.style.display === 'none' || chatWindow.hasAttribute('hidden')) {
+                    return; 
+                }
+
+                // Ép cứng Style cho Khung Cha
+                chatWindow.style.setProperty('position', 'fixed', 'important');
+                chatWindow.style.setProperty('top', 'auto', 'important');
+                chatWindow.style.setProperty('left', 'auto', 'important');
+                chatWindow.style.setProperty('transform', 'none', 'important');
+                chatWindow.style.setProperty('margin', '0', 'important');
+
+                if (isMobile) {
+                    chatWindow.style.setProperty('width', MOBILE_WIDTH, 'important');
+                    chatWindow.style.setProperty('height', MOBILE_HEIGHT, 'important');
+                    chatWindow.style.setProperty('bottom', MOBILE_BOTTOM, 'important');
+                    chatWindow.style.setProperty('right', MOBILE_RIGHT, 'important');
+                } else {
+                    chatWindow.style.setProperty('width', DESKTOP_WIDTH, 'important');
+                    chatWindow.style.setProperty('height', DESKTOP_HEIGHT, 'important');
+                    chatWindow.style.setProperty('bottom', DESKTOP_BOTTOM, 'important');
+                    chatWindow.style.setProperty('right', DESKTOP_RIGHT, 'important');
+                }
+
+                // Ép cứng Style cho Iframe con bên trong
+                const iframe = chatWindow.querySelector('iframe') || document.querySelector('iframe[src*="udify.app/chatbot"]');
+                if (iframe) {
+                    iframe.style.setProperty('position', 'absolute', 'important');
+                    iframe.style.setProperty('width', '100%', 'important');
+                    iframe.style.setProperty('height', '100%', 'important');
+                    iframe.style.setProperty('top', '0', 'important');
+                    iframe.style.setProperty('left', '0', 'important');
+                    iframe.style.setProperty('transform', 'none', 'important');
+                }
             }
+
+            // Tạo bộ quan sát (Observer) để theo dõi mọi hành vi thay đổi thuộc tính của Dify
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                        // Tạm dừng quan sát để tránh vòng lặp vô hạn khi ta tự sửa style
+                        observer.disconnect();
+                        enforceChatStyles();
+                        // Kích hoạt lại bộ quan sát
+                        startObserving();
+                    }
+                });
+            });
+
+            function startObserving() {
+                const target = document.getElementById('dify-chatbot-bubble-window') || document.body;
+                observer.observe(target, {
+                    attributes: true,
+                    childList: true,
+                    subtree: true,
+                    attributeFilter: ['style', 'class']
+                });
+            }
+
+            // Chạy kiểm tra ngay khi trang load và khi resize màn hình
+            window.addEventListener('DOMContentLoaded', () => {
+                enforceChatStyles();
+                startObserving();
+            });
+            window.addEventListener('resize', enforceChatStyles);
             
-            /* Khóa khung cha trên Mobile */
-            html body #dify-chatbot-bubble-window {
-                width: 85% !important;     /* Chiếm 85% màn hình mobile */
-                height: 65% !important;    /* Chiếm 65% màn hình mobile */
-                bottom: 5.5rem !important; /* Nằm ngay trên nút bấm mobile */
-                right: 1.5rem !important;
-                border-radius: 12px !important;
-                transform: none !important;
-            }
-            
-            /* Khóa Iframe con trên Mobile */
-            html body #dify-chatbot-bubble-window iframe,
-            html body iframe[src*="udify.app/chatbot"] {
-                width: 100% !important;
-                height: 100% !important;
-                border-radius: 12px !important;
-                transform: none !important;
-            }
-        }
-    </style>
+            // Dự phòng cho trường hợp Dify sinh ra muộn
+            setInterval(enforceChatStyles, 300);
+        })();
+    </script>
     
 </body>
 </html>
