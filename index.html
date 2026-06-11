@@ -474,49 +474,83 @@
     </script>
     
     <style>
-        /* 1. ÉP NÚT BẤM CHAT LUÔN GHIM CỐ ĐỊNH */
+        /* ======================================================== */
+        /* 1. KHÓA CỐ ĐỊNH TRÊN MÁY TÍNH (DESKTOP)                  */
+        /* ======================================================== */
+        
+        /* Ghim chặt nút bấm chat ở góc phải dưới */
         html body #dify-chatbot-bubble-button {
             background-color: #1C64F2 !important;
             position: fixed !important;
             bottom: 2rem !important;
             right: 2rem !important;
             z-index: 999999 !important;
-        }
-
-        /* 2. ÉP THẺ IFRAME (CHỨA CỬA SỔ CHAT) KHÔNG ĐƯỢC PHÉP CO NHỎ VÀ NHẢY VỊ TRÍ */
-        /* Trên Máy tính (Desktop) */
-        html body iframe[src*="udify.app/chatbot"] {
-            position: fixed !important;
-            
-            /* Ép kích thước lớn cố định - Chống tuyệt đối hành vi tự động bóp nhỏ sau 1-2s */
-            width: 24rem !important;   /* Chiều rộng ô chat lớn */
-            height: 40rem !important;  /* Chiều cao ô chat lớn */
-            
-            /* Ghim chặt ngay phía trên nút bấm */
-            bottom: 6.5rem !important; 
-            right: 2rem !important;
-            z-index: 999999 !important;
-            
-            /* Triệt tiêu toàn bộ lệnh dịch chuyển động từ script nội bộ Dify */
             top: auto !important;
             left: auto !important;
+            transform: none !important;
+        }
+        
+        /* KHÓA CHA: Ép khung bọc ngoài cố định tọa độ và kích thước lớn */
+        html body #dify-chatbot-bubble-window {
+            position: fixed !important;
+            width: 24rem !important;   /* Chiều rộng ô chat lớn */
+            height: 40rem !important;  /* Chiều cao ô chat lớn */
+            bottom: 6.5rem !important; /* Ghim cứng phía trên nút bấm */
+            right: 2rem !important;
+            z-index: 999999 !important;
+            top: auto !important;
+            left: auto !important;
+            transform: none !important; /* Triệt tiêu hoàn toàn hiệu ứng dịch chuyển làm giật khung */
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* KHÓA CON: Ép Iframe bên trong khít hoàn toàn với khung cha, chống tự resize */
+        html body #dify-chatbot-bubble-window iframe,
+        html body iframe[src*="udify.app/chatbot"] {
+            position: absolute !important;
+            width: 100% !important;    /* Chiếm trọn vẹn 100% khung cha đã khóa */
+            height: 100% !important;   /* Chiếm trọn vẹn 100% khung cha đã khóa */
+            top: 0 !important;
+            left: 0 !important;
+            bottom: auto !important;
+            right: auto !important;
             transform: none !important;
             margin: 0 !important;
         }
 
-        /* 3. ĐỊNH VỊ THEO TỶ LỆ TRÊN ĐIỆN THOẠI (MOBILE) */
+        /* Cho phép nút Close (X) hoạt động ẩn/đóng mượt mà không bị kẹt */
+        html body #dify-chatbot-bubble-window[style*="display: none"],
+        html body #dify-chatbot-bubble-window[hidden] {
+            display: none !important;
+        }
+
+        /* ======================================================== */
+        /* 2. KHÓA CỐ ĐỊNH THEO TỶ LỆ TRÊN ĐIỆN THOẠI (MOBILE)      */
+        /* ======================================================== */
         @media (max-width: 640px) {
             html body #dify-chatbot-bubble-button {
                 bottom: 1.5rem !important;
                 right: 1.5rem !important;
             }
             
-            html body iframe[src*="udify.app/chatbot"] {
-                width: 85% !important;     /* Chiếm 85% bề ngang màn hình mobile */
-                height: 65% !important;    /* Chiếm 65% bề dọc màn hình mobile */
+            /* Khóa khung cha trên Mobile */
+            html body #dify-chatbot-bubble-window {
+                width: 85% !important;     /* Chiếm 85% màn hình mobile */
+                height: 65% !important;    /* Chiếm 65% màn hình mobile */
                 bottom: 5.5rem !important; /* Nằm ngay trên nút bấm mobile */
                 right: 1.5rem !important;
                 border-radius: 12px !important;
+                transform: none !important;
+            }
+            
+            /* Khóa Iframe con trên Mobile */
+            html body #dify-chatbot-bubble-window iframe,
+            html body iframe[src*="udify.app/chatbot"] {
+                width: 100% !important;
+                height: 100% !important;
+                border-radius: 12px !important;
+                transform: none !important;
             }
         }
     </style>
