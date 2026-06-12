@@ -79,9 +79,10 @@
             <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-100 leading-tight">
                 Hi, I'm <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">Nguyen Trung Kien</span>
             </h1>
-            <div class="inline-flex items-center gap-2 bg-indigo-500/15 border border-indigo-400/30 text-indigo-400 text-base px-3 py-1 rounded-md font-medium shadow-sm">
-                <i class="fa-solid fa-award"></i> <span id="pmp-tag" data-i18n="pmp-tag">PMP® Certified - </span>
-                <p id="hero-title" data-i18n="hero-title" class="text-indigo-400 font-medium">Project Manager</p>
+            <div class="inline-flex items-center gap-2 bg-indigo-500/15 border border-indigo-400/40 text-indigo-300 text-base px-4 py-1.5 rounded-md shadow-sm transition-all duration-300 ease-out hover:scale-105 hover:bg-indigo-500/25 hover:border-indigo-400/60 origin-center cursor-default">
+                <i class="fa-solid fa-award text-indigo-400"></i> 
+                <span id="pmp-tag" data-i18n="pmp-tag" class="text-indigo-400 font-bold tracking-wide">PMP® Certified  </span>
+                <p id="hero-title" data-i18n="hero-title" class="font-bold tracking-wide">Project Manager</p>
             </div>
             <div id="hero-desc" data-i18n="hero-desc" class="text-sm md:text-base text-slate-400 leading-relaxed max-w-2xl">
                 <!-- Chèn động qua JS -->
@@ -359,7 +360,7 @@
         const i18nData = {
             en: {
                 "nav-about": "About", "nav-exp": "Experience", "nav-contact": "Contact","nav-mypages": "My WebNet",
-                "pmp-tag": "PMP® Certified - ", "hero-title": "Project Manager",
+                "pmp-tag": "PMP® Certified  ", "hero-title": "Project Manager",
                 "hero-desc": `
                     <div class="space-y-4 text-left">
                         <p><strong>PMP® Certified Project Manager</strong> with <strong>6+ years</strong> leading software projects across web & mobile applications, B2B platforms, and system integrations in digital transformation – backed by <strong>10 years</strong> as a Software Developer and QA/QC.</p>
@@ -397,7 +398,7 @@
             },
             vi: {
                 "nav-about": "Giới thiệu", "nav-exp": "Kinh nghiệm", "nav-contact": "Liên hệ", "nav-mypages": "Trang WebNet",
-                "pmp-tag": "PMP® Certified - ", "hero-title": "Project Manager",
+                "pmp-tag": "PMP® Certified  ", "hero-title": "Project Manager",
                 "hero-desc": `
                     <div class="space-y-4 text-left">
                         <p>Quản Lý Dự Án chuyên nghiệp, đạt chứng chỉ <strong>PMP®</strong> với <strong>+6 năm kinh nghiệm</strong> dẫn dắt các dự án phần mềm đa dạng như ứng dụng Web & Mobile, nền tảng B2B, tích hợp các hệ thống chuyển đổi số cho doanh nghiệp – với nền tảng kỹ thuật từ <strong>10 năm</strong> làm Developer và QA/QC.</p>
@@ -474,6 +475,7 @@
     </script>
     
     <!-- KHU VỰC CẤU HÌNH GIAO DIỆN DIFY -->
+    <!-- CẤU HÌNH ĐỊNH VỊ DIFY AN TOÀN TUYỆT ĐỐI - KHÔNG XUNG ĐỘT TỌA ĐỘ -->
     <style>
         /* ======================================================== */
         /* 1. HIỂN THỊ TRÊN MÁY TÍNH (DESKTOP)                      */
