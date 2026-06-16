@@ -145,11 +145,11 @@
             <div id="tab3" class="tab-content space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="md:col-span-2">
-                        <input type="text" id="food-search" oninput="filterFoods()" placeholder="Nhập tên thực phẩm cần tra cứu... (Ví dụ: rau lang, cá rô, măng chua)" class="w-full p-3 border border-slate-200 rounded-xl text-base bg-slate-50/50">
+                        <input type="text" id="food-search" oninput="filterFoods()" placeholder="Nhập tên thực phẩm cần tra cứu... (Ví dụ: bánh mì, rau lang, cá hồi, măng chua)" class="w-full p-3 border border-slate-200 rounded-xl text-base bg-slate-50/50">
                     </div>
                     <div>
                         <select id="category-filter" onchange="filterFoods()" class="w-full p-3 border border-slate-200 rounded-xl text-base bg-white">
-                            <option value="all">Tất cả danh mục món ăn</option>
+                            <option value="all">Tất cả danh mục thực phẩm</option>
                             <option value="RAU CỦ">Rau củ / Nấm</option>
                             <option value="TRÁI CÂY">Trái cây</option>
                             <option value="ĐỒ ĂN CHẾ BIẾN SẴN">Đồ ăn chế biến sẵn / Hàng quán</option>
@@ -231,6 +231,45 @@
                     "Đảm bảo duy trì uống trên 2 lít nước lọc mỗi ngày nhằm kích thích tăng lượng nước tiểu, thúc đẩy màng lọc của thận hoạt động.",
                     "Bổ sung đa dạng các loại rau xanh giàu chất xơ giúp cơ thể chuyển hóa mượt mà, đồng thời hạn chế bớt cảm giác thèm ăn thịt đỏ.",
                     "Ưu tiên các dòng rau xanh kiềm tính cao có khả năng hỗ trợ trung hòa lượng axit uric tự do dư thừa trong huyết thanh."
+                ]
+            },
+            {
+                title: "Các biến chứng bệnh gout",
+                image: "https://i1-suckhoe.vnecdn.net/2025/07/18/z5356136882568-336ef88cacfdff2-4224-2034-1752829653.jpg",
+                content: [
+                    "Bệnh gout mạn tính có thể dẫn đến nhiều vấn đề nghiêm trọng như biến dạng khớp, sỏi thận, bệnh tim mạch nếu không được điều trị. Gout là dạng viêm khớp xảy ra khi nồng độ axit uric tăng cao trong máu, gây sưng, nóng, đỏ và đau khớp. Tình trạng này thường bắt đầu ở ngón chân cái, song nếu không điều trị đúng cách, theo thời gian người bệnh có thể gặp các triệu chứng ở nhiều khớp khác nhau trên khắp cơ thể. Lượng axit uric dư thừa cũng có thể làm tổn thương khớp, xương và nhiều cơ quan khác.",
+                    "Tổn thương khớp. Bệnh gout mạn tính gây sưng khớp thường xuyên và viêm mạn tính, từ đó làm tổn thương khớp. Người bệnh cũng có thể bị cứng khớp và biến dạng khớp. Kiểm soát các đợt bùng phát bệnh giúp ngăn ngừa tổn thương khớp. Tổ chức Viêm khớp khuyến nghị người bệnh chườm đá lên vùng đau và kê cao khớp, uống nhiều nước như nước lọc, tránh rượu bia hoặc nước ngọt có đường. Giảm căng thẳng vì đây cũng là yếu tố có thể làm trầm trọng thêm bệnh gout. Người bệnh đi khám để được bác sĩ kê thuốc giảm viêm và rút ngắn thời gian bùng phát bệnh. Người bệnh nặng có thể cần phẫu thuật để phục hồi tổn thương khớp hoặc thay thế các khớp bị tổn thương nặng.",
+                    "Hình thành hạt tophi. Hạt tophi là tập hợp các tinh thể urat, gây ra các cục u với kích thước khác nhau trên các bộ phận của cơ thể như ngón tay, bàn tay, bàn chân, ngón chân, mắt cá chân, khuỷu tay, tai. Tophi là dấu hiệu của bệnh gout mạn tính và có thể phát triển ở người thường xuyên bị các cơn gout cấp. Tophi thường không gây đau, nhưng chúng có thể làm tổn thương khớp, khiến cử động khớp khó khăn hơn. Tophi cũng có thể dẫn đến các biến chứng nếu không được điều trị. Nếu bị nhiễm trùng hoặc chèn ép dây thần kinh, chúng có thể gây đau và nguy hiểm. Để loại bỏ hạt tophi, bác sĩ có thể kê thuốc hạ axit uric để ngăn ngừa axit uric kết tinh. Điều trị hạt tophi có thể mất nhiều thời gian, kích thước của hạt tophi có thể giảm đi sau vài tháng điều trị. Trong trường hợp nghiêm trọng, bệnh nhân có thể cần phẫu thuật để loại bỏ hạt tophi.",
+                    "Bệnh thận. Thận có chức năng lọc các chất thải như axit uric ra khỏi cơ thể. Khi nồng độ axit uric cao, thận có thể khó xử lý lượng axit dư thừa. Tinh thể axit uric tích tụ trong thận có thể làm suy giảm chức năng thận và dẫn đến bệnh thận hoặc suy thận. Trong giai đoạn đầu của bệnh thận, người bệnh cảm thấy mệt mỏi, yếu ớt hoặc thiếu năng lượng. Khi bệnh thận tiến triển, người bệnh có thể gặp phải các triệu chứng như sưng mắt cá chân, buồn nôn, mệt mỏi, chán ăn. Người bị bệnh gout có nguy cơ mắc sỏi thận cao hơn. Nồng độ axit uric cao có thể khiến các tinh thể urat tích tụ trong đường tiết niệu và hình thành sỏi. Các triệu chứng của sỏi thận bao gồm đau dữ dội ở lưng, bẹn, bụng dưới hoặc hông dưới xương sườn, đau khi đi tiểu, nước tiểu màu nâu, đỏ hoặc hồng. Nếu người bị sỏi thận do gout, bác sĩ có thể kê thuốc và một chất kiềm hóa để hòa tan sỏi urat.",
+                    "Vấn đề về mắt. Các vấn đề về mắt là biến chứng ít gặp của bệnh gout. Khi đó, tinh thể axit uric có thể ảnh hưởng đến các bộ phận của mắt như mí mắt, giác mạc và mống mắt. Hạt tophi cũng có thể ảnh hưởng đến các vùng khác của mắt như mí mắt trên.",
+                    "Bệnh tim mạch. Bệnh gout không trực tiếp gây tử vong, nhưng có thể dẫn đến các biến chứng nguy hiểm nếu không được điều trị đúng cách. Theo Tổ chức Viêm khớp Mỹ, gout có thể làm tăng nguy cơ mắc các vấn đề tim mạch, bao gồm suy tim, đau tim và đột quỵ, do tích tụ các tinh thể axit uric gây tổn thương mạch máu. Gout cũng làm tăng nguy cơ mắc bệnh tiểu đường type 2, nhất là ở nữ giới, có thể là do mức độ viêm cao. Người bệnh gout cũng dễ bị thừa cân, huyết áp cao hoặc cholesterol cao. Gout có thể làm tăng gấp đôi nguy cơ mắc chứng ngưng thở khi ngủ, từ đó dẫn tới các vấn đề sức khỏe nghiêm trọng, bao gồm béo phì, tiểu đường, huyết áp cao, đau tim, đột quỵ. Dùng thuốc hạ nồng độ axit uric kết hợp thay đổi chế độ ăn uống, lối sống giúp kiểm soát gout, giảm nguy cơ biến chứng. Người bệnh hạn chế hoặc tránh các thực phẩm giàu purine (như nội tạng động vật và động vật có vỏ), rượu bia và nước trái cây ngọt để giảm tích tụ axit uric, nên uống nhiều nước. Tập thể dục thường xuyên và duy trì cân nặng vừa phải, kiểm soát các tình trạng như tăng huyết áp hoặc tiểu đường."
+                ]
+            },
+            {
+                title: "Mẹo đào thải Axit Uric nhanh: Sử dụng Cà phê đen và Vitamin C",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=60",
+                content: [
+                    "Uống từ 1 - 2 tách cà phê đen không đường mỗi ngày giúp kích thích lợi tiểu và làm giảm đáng kể nguy cơ bùng phát cơn đau gút.",
+                    "Duy trì bổ sung Vitamin C đều đặn hàng ngày được kiểm chứng lâm sàng có thể hỗ trợ làm hạ nồng độ axit uric máu.",
+                    "Lưu ý bảo vệ thận: Chỉ nên uống bổ sung Vitamin C vào ban ngày (trước 6h tối) để tránh tạo sỏi mặn và giảm áp lực lọc cho thận."
+                ]
+            },
+            {
+                title: "Mẹo đào thải Axit Uric nhanh: Sử dụng Cà phê đen và Vitamin C",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=60",
+                content: [
+                    "Uống từ 1 - 2 tách cà phê đen không đường mỗi ngày giúp kích thích lợi tiểu và làm giảm đáng kể nguy cơ bùng phát cơn đau gút.",
+                    "Duy trì bổ sung Vitamin C đều đặn hàng ngày được kiểm chứng lâm sàng có thể hỗ trợ làm hạ nồng độ axit uric máu.",
+                    "Lưu ý bảo vệ thận: Chỉ nên uống bổ sung Vitamin C vào ban ngày (trước 6h tối) để tránh tạo sỏi mặn và giảm áp lực lọc cho thận."
+                ]
+            },
+            {
+                title: "Mẹo đào thải Axit Uric nhanh: Sử dụng Cà phê đen và Vitamin C",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=60",
+                content: [
+                    "Uống từ 1 - 2 tách cà phê đen không đường mỗi ngày giúp kích thích lợi tiểu và làm giảm đáng kể nguy cơ bùng phát cơn đau gút.",
+                    "Duy trì bổ sung Vitamin C đều đặn hàng ngày được kiểm chứng lâm sàng có thể hỗ trợ làm hạ nồng độ axit uric máu.",
+                    "Lưu ý bảo vệ thận: Chỉ nên uống bổ sung Vitamin C vào ban ngày (trước 6h tối) để tránh tạo sỏi mặn và giảm áp lực lọc cho thận."
                 ]
             },
             {
