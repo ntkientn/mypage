@@ -85,7 +85,7 @@
   { "name": "Xoài chín", "category": "TRÁI CÂY", "level": 3, "limit": "1/2 quả nhỏ hoặc 100g", "note": "Xoài chín chứa rất nhiều đường ngọt.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Mận Hà Nội (plum)", "category": "TRÁI CÂY", "level": 3, "limit": "5 – 7 quả / lần", "note": "Ăn hạn chế hàng tuần.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Lựu", "category": "TRÁI CÂY", "level": 3, "limit": "1/2 quả", "note": "Khá tốt nhưng lượng đường hơi cao.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Trái cây sấy", "category": "TRÁI CÂY", "level": 4, "limit": "Hạn chế tối đa (1-2 lần/tháng)", "note": "Đường cô đặc, làm tăng HbA1c.", "isStarch": false, "isHighPurine: false, "isSalty": false },
+  { "name": "Trái cây sấy", "category": "TRÁI CÂY", "level": 4, "limit": "Hạn chế tối đa (1-2 lần/tháng)", "note": "Đường cô đặc, làm tăng HbA1c.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Trái cây ngâm đường", "category": "TRÁI CÂY", "level": 4, "limit": "Hạn chế tối đa (1-2 lần/tháng)", "note": "Lượng đường ẩn cực cao.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Chuối chín vàng đậm", "category": "TRÁI CÂY", "level": 4, "limit": "Hạn chế tối đa (1-2 lần/tháng)", "note": "Lượng đường chuyển hóa cao.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Thơm (dứa) chín ngọt nhiều", "category": "TRÁI CÂY", "level": 4, "limit": "2 – 3 lát", "note": "Đường fructôzơ cao.", "isStarch": false, "isHighPurine": false, "isSalty": false },
