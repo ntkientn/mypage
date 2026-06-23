@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TodoToday - Làm gì hôm nay - v1.1.20260621</title>
+    <title>TodoToday - Làm gì hôm nay - v1.3.20260623</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -15,9 +15,9 @@
         }
     </style>
 </head>
-<body class="bg-[#f8fafc] text-slate-800 min-h-screen antialiased flex flex-col justify-between text-base">
+<body class="overflow-x-hidden w-full bg-slate-100 bg-[#f8fafc] text-slate-800 min-h-screen antialiased flex flex-col justify-between text-base">
 
-    <div class="w-full bg-white border-b border-slate-200/80 px-4 py-2.5 flex justify-between items-center shadow-sm">
+    <div class="w-full flex bg-white border-b border-slate-200/80 px-4 py-3 gap-2 flex justify-between items-center shadow-sm">
         <a href="https://ntkientn.github.io/mypage/webnet.html" class="px-3.5 py-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all">
             ← Back to WebNet
         </a>
@@ -34,11 +34,12 @@
                 <span class="text-3xl font-black tracking-tight bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">TodoToday</span>
             </div>
 
-            <div class="relative inline-block group">
-                <button class="w-7 h-7 bg-slate-200 hover:bg-indigo-500 text-slate-600 hover:text-white rounded-full font-bold text-sm shadow-sm transition-all flex items-center justify-center cursor-pointer animate-pulse focus:outline-none">
+            <div class="relative inline-block">
+                <button onclick="toggleTooltip(event)" class="w-7 h-7 bg-slate-200 hover:bg-indigo-500 text-slate-600 hover:text-white rounded-full font-bold text-sm shadow-sm transition-all flex items-center justify-center cursor-pointer animate-pulse focus:outline-none">
                     ?
                 </button>
-                <div class="absolute left-1/2 -translate-x-1/2 top-9 w-72 bg-slate-900 text-white text-xs rounded-xl p-3.5 shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-focus:opacity-100 transition-all duration-300 z-50 line-relaxed space-y-1.5 border border-slate-800">
+                
+                <div id="hint-tooltip" class="hidden absolute right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 top-9 w-72 bg-slate-900 text-white text-xs rounded-xl p-3.5 shadow-xl z-50 line-relaxed space-y-1.5 border border-slate-800">
                     <div class="font-bold text-indigo-400 flex items-center gap-1">💡 Hướng dẫn sử dụng:</div>
                     <p data-vi="TodoToday là công cụ giúp bạn lên kế hoạch và tập trung hoàn thành những công việc quan trọng nhất trong ngày. Bạn còn có thể lưu lại lịch sử và theo dõi hiệu suất công việc của mình trên biểu đồ theo khung thời gian tùy chỉnh." data-en="TodoToday is a tool that helps you plan and focus on completing the most important tasks in a day. You can also save your history and track your work performance on a chart according to a customizable time frame.">TodoToday là công cụ giúp bạn lên kế hoạch và tập trung hoàn thành những công việc quan trọng nhất trong 1 ngày. Bạn còn có thể lưu lại lịch sử và theo dõi hiệu suất công việc của mình trên biểu đồ theo khung thời gian tùy chỉnh.</p>
                     <p data-vi="1. Chọn ngày làm việc (mặc định là hôm nay), phân bổ công việc vào 3 buổi Sáng, Chiều, Tối cho đủ Quỹ thời gian 10 giờ." data-en="1. Select working date (today by default), Allocate tasks into Morning, Afternoon, Evening blocks to complete the 10-hour fund.">1. Phân bổ công việc vào 3 buổi Sáng (4h), Chiều (4h), Tối (2h) cho đủ Quỹ thời gian 10 giờ.</p>
@@ -53,11 +54,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
                 <div class="flex border-b border-slate-200 bg-white rounded-t-2xl px-2">
                     <button id="tab-today" onclick="switchTab('today')" 
-                        class="flex-1 sm:flex-none py-3 px-6 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 transition-all cursor-pointer text-center">
+                        class="flex-1 sm:flex-none py-3 px-6 text-base font-bold text-indigo-600 border-b-2 border-indigo-600 transition-all cursor-pointer text-center">
                         Bảng Công Việc
                     </button>
                     <button id="tab-history" onclick="switchTab('history')" 
-                        class="flex-1 sm:flex-none py-3 px-6 text-sm font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all cursor-pointer text-center">
+                        class="flex-1 sm:flex-none py-3 px-6 text-base font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all cursor-pointer text-center">
                         Lịch sử
                     </button>
                 </div>
@@ -78,18 +79,27 @@
                         <span id="date-display-text" class="text-lg font-bold text-slate-700 mr-10 pointer-events-none tracking-tight">21/06/2026</span>
                         <input type="date" id="date-picker" onchange="updateDateDisplay()" class="custom-date-input absolute inset-0 opacity-0 w-full h-full z-10">
                     </div>
+                   <!-- BỎ NÚT HÔM NAY ĐỂ TRÁNH TRÀN LỀ TRÊN MOBILE VIEW
                     <button id="btn-goto-today" onclick="setToday()" class="hidden px-3.5 py-2.5 text-sm font-bold bg-indigo-50 border border-indigo-100 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all cursor-pointer whitespace-nowrap shadow-sm">
                         <span data-vi="Hôm nay" data-en="Today">Hôm nay</span>
                     </button>
+                    -->
                 </div>
 
                 <div class="w-full flex-1 space-y-2 lg:px-6">
                     <div class="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden border border-slate-200 shadow-inner">
                         <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full w-[0%] transition-all duration-500"></div>
                     </div>
-                    <div class="flex justify-between items-center text-xs font-medium">
-                        <span id="target-status" class="text-slate-400 italic break-words line-clamp-1">Chưa tích lũy mục tiêu hoặc tiến độ thấp.</span>
-                        <span class="bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.5 rounded shrink-0" id="progress-text">0h / 10h done</span>
+                    <div class="flex justify-between items-start text-xs font-medium gap-3">
+                        <!-- 1. Bỏ line-clamp-1, thêm whitespace-normal và break-words để tự xuống dòng mượt mà -->
+                        <span id="target-status" class="text-slate-500 italic whitespace-normal break-words leading-relaxed flex-1">
+                            💪 Bạn có sợ sự trì hoãn? Sự trì hoãn lại rất sợ người hành động đó. Hành động ngay để kiểm soát mục tiêu và chứng minh bản lĩnh kỷ luật của bạn!
+                        </span>
+                        
+                        <!-- 2. Giữ nguyên ô số nhưng đổi items-start ở div cha để ô này luôn neo ở góc trên bên phải -->
+                        <span class="bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.5 rounded shrink-0 sticky top-0" id="progress-text">
+                            0h / 10h done
+                        </span>
                     </div>
                 </div>
 
@@ -247,19 +257,40 @@
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-                    <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50">
-                        <h3 class="text-sm sm:text-base font-bold text-slate-700" data-vi="Nhật ký lịch sử kết toán" data-en="Settlement History Logs">Nhật ký lịch sử kết toán</h3>
-                        <div class="flex gap-2">
-                            <select id="filter-year" onchange="renderHistoryView()" class="text-xs font-bold bg-white border border-slate-200 rounded-lg px-2 py-1 focus:outline-none text-slate-700 shadow-sm"></select>
-                            <select id="filter-month" onchange="renderHistoryView()" class="text-xs font-bold bg-white border border-slate-200 rounded-lg px-2 py-1 focus:outline-none text-slate-700 shadow-sm">
-                                <option value="all" data-vi="Tất cả tháng" data-en="All Months">Tất cả tháng</option>
-                                <option value="01">01</option><option value="02">02</option><option value="03">03</option>
-                                <option value="04">04</option><option value="05">05</option><option value="06">06</option>
-                                <option value="07">07</option><option value="08">08</option><option value="09">09</option>
-                                <option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                            </select>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200/60 mb-6 shadow-2xs">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                            <h3 class="text-xl font-bold text-slate-700 whitespace-nowrap" data-vi="Lịch sử kết toán" data-en="History Logs">
+                                Lịch sử kết toán
+                            </h3>
+                            
+                            <div class="flex items-center gap-1.5 bg-white p-1 rounded-lg border border-slate-200 shadow-3xs">
+                                <select id="filter-year" onchange="handleFilterChange()" class="text-sm font-bold bg-transparent px-2 py-1 text-slate-600 focus:outline-none cursor-pointer"></select>
+                                <span class="text-slate-300 text-sm">/</span>
+                                <select id="filter-month" onchange="handleFilterChange()" class="text-sm font-bold bg-transparent px-2 py-1 text-slate-600 focus:outline-none cursor-pointer">
+                                    <option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option>
+                                    <option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option>
+                                    <option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-start md:justify-end gap-2 border-t border-slate-200/60 pt-3 md:pt-0 md:border-none">
+                            <button onclick="exportBackupData()" class="text-sm font-bold text-slate-600 bg-white border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-100 transition-all cursor-pointer flex items-center gap-1 shadow-2xs whitespace-nowrap">
+                                📤 <span data-vi="Xuất Data" data-en="Export">Xuất Data</span>
+                            </button>
+                            
+                            <button onclick="triggerImportClick()" class="text-sm font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-3 py-2 rounded-lg hover:bg-indigo-100 transition-all cursor-pointer flex items-center gap-1 shadow-2xs whitespace-nowrap">
+                                📥 <span data-vi="Nhập Data" data-en="Import">Nhập Data</span>
+                            </button>
+                            
+                            <input type="file" id="hidden-file-input" accept=".json" onchange="importBackupData(event)" class="hidden">
+
+                            <button onclick="showBackupHint()" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-slate-300/80 text-slate-600 text-sm font-bold flex items-center justify-center transition-all cursor-pointer shadow-3xs" title="Giải thích cơ chế sao lưu">
+                                ❓
+                            </button>
                         </div>
                     </div>
+
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-sm sm:text-base">
                             <thead>
@@ -343,6 +374,12 @@
         { text_vi: "Những thành tựu ngày hôm nay là những điều tưởng như không thể của ngày hôm qua.", text_en: "Today’s accomplishments were yesterday’s impossibilities.", author: "Robert H. Schuller" },
         { text_vi: "Cuộc sống giống như đi xe đạp. Để giữ thăng bằng, bạn phải luôn đi tới.", text_en: "Life is like riding a bicycle. To keep your balance, you must keep moving.", author: "Albert Einstein" },
         { text_vi: "Nếu tôi không thể làm những điều vĩ đại, tôi có thể làm những việc nhỏ một cách kì vĩ nhất.", text_en: "If I cannot do great things, I can do small things in a great way.", author: "Martin Luther King, Jr." },
+        { text_vi: "Thái độ của bạn là ổ khóa đóng lại, hoặc là chìa khóa mở ra cánh cửa thành công.", text_en: "Your attitude is either the lock on or key to your door of success.", author: "Denis Waitley" },
+        { text_vi: "Làm việc chăm chỉ sẽ giúp ta đánh bại những kẻ có tài năng nhưng không có sự chăm chỉ.", text_en: "Hard work beats talent when talent doesn't work hard.", author: "Tim Notke" },
+        { text_vi: "Thành công là tổng của những nỗ lực nhỏ cộng lại, được lặp đi lặp lại mỗi ngày.", text_en: "Success is the sum of small efforts, repeated day in and day out", author: "Robert Collier" },
+        { text_vi: "Nếu bạn mệt mỏi, hãy học cách nghỉ ngơi, chứ đừng bỏ cuộc.", text_en: "If you get tired, learn to rest, not to quit.", author: "Banksy" },
+        { text_vi: "Kỷ luật là việc lựa chọn giữa điều bạn muốn ngay bây giờ hay điều bạn mong muốn nhất.", text_en: "Discipline is choosing between what you want now and what you want most.", author: "Augusta F. Kantra" },
+        { text_vi: "Tôi không bao giờ mơ về thành công. Tôi nỗ lực để đạt được nó.", text_en: "I never dreamt of success. I worked for it.", author: "Estée Lauder" },
         { text_vi: "Chúng ta là những gì chúng ta lặp lại hàng ngày. Vì vậy, sự xuất sắc là thói quen.", text_en: "We are what we repeatedly do. Excellence, then, is a habit.", author: "Aristotle" }
     ];
 
@@ -368,11 +405,12 @@
         return `${p[2]}/${p[1]}/${p[0]}`;
     }
 
+    // 1. HÀM KHỞI CHẠY KHÔNG CÒN DATA TEST MẪU
     async function initApp() {
         const localToday = getLocalTodayString();
         appState.selectedDate = localToday;
         
-        // 1. Đọc dữ liệu công việc thực tế của User từ localStorage trước
+        // Đọc dữ liệu thực tế của User từ localStorage
         const saved = localStorage.getItem('todotoday_chart_v7');
         if (saved) {
             const localState = JSON.parse(saved);
@@ -381,55 +419,13 @@
             appState.dailyBoards = localState.dailyBoards || {};
             appState.history = localState.history || [];
         } else {
+            // Trắng hoàn toàn đối với user mới tinh
             appState.history = [];
         }
 
-        // 2. NẠP THẲNG DATA TEST 1 NĂM (Không dùng fetch để tránh lỗi file://)
-        // Nếu User mới tinh chưa có lịch sử, hệ thống tự động đổ mảng test này để anh duyệt giao diện
-        if (appState.history.length === 0) { 
-            console.log("🛠️ Đang hiển thị dữ liệu Test 1 năm trực tiếp từ Memory (Không lo lỗi CORS).");
-            
-            const mockOneYearData = [
-                { "date": "2026-06-22", "score": 85, "morningScore": 90, "afternoonScore": 80, "eveningScore": 90 },
-                { "date": "2026-06-21", "score": 70, "morningScore": 80, "afternoonScore": 60, "eveningScore": 70 },
-                { "date": "2026-06-20", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
-                { "date": "2026-06-19", "score": 60, "morningScore": 50, "afternoonScore": 70, "eveningScore": 60 },
-                { "date": "2026-06-18", "score": 80, "morningScore": 80, "afternoonScore": 80, "eveningScore": 80 },
-                { "date": "2026-06-15", "score": 75, "morningScore": 90, "afternoonScore": 60, "eveningScore": 80 },
-                { "date": "2026-06-14", "score": 90, "morningScore": 90, "afternoonScore": 90, "eveningScore": 90 },
-                { "date": "2026-06-10", "score": 40, "morningScore": 30, "afternoonScore": 50, "eveningScore": 40 },
-                { "date": "2026-06-05", "score": 85, "morningScore": 90, "afternoonScore": 80, "eveningScore": 90 },
-                { "date": "2026-06-01", "score": 70, "morningScore": 70, "afternoonScore": 70, "eveningScore": 70 },
-                { "date": "2026-05-28", "score": 90, "morningScore": 100, "afternoonScore": 80, "eveningScore": 90 },
-                { "date": "2026-05-20", "score": 65, "morningScore": 60, "afternoonScore": 70, "eveningScore": 60 },
-                { "date": "2026-05-15", "score": 80, "morningScore": 80, "afternoonScore": 85, "eveningScore": 70 },
-                { "date": "2026-05-10", "score": 55, "morningScore": 50, "afternoonScore": 60, "eveningScore": 50 },
-                { "date": "2026-04-25", "score": 75, "morningScore": 80, "afternoonScore": 70, "eveningScore": 80 },
-                { "date": "2026-04-18", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
-                { "date": "2026-04-12", "score": 60, "morningScore": 50, "afternoonScore": 70, "eveningScore": 60 },
-                { "date": "2026-03-22", "score": 90, "morningScore": 90, "afternoonScore": 95, "eveningScore": 80 },
-                { "date": "2026-03-15", "score": 85, "morningScore": 90, "afternoonScore": 80, "eveningScore": 90 },
-                { "date": "2026-03-07", "score": 50, "morningScore": 40, "afternoonScore": 60, "eveningScore": 50 },
-                { "date": "2026-02-17", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
-                { "date": "2026-01-19", "score": 90, "morningScore": 90, "afternoonScore": 90, "eveningScore": 90 },
-                { "date": "2025-12-20", "score": 90, "morningScore": 100, "afternoonScore": 80, "eveningScore": 100 },
-                { "date": "2025-11-21", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
-                { "date": "2025-10-18", "score": 90, "morningScore": 90, "afternoonScore": 90, "eveningScore": 90 },
-                { "date": "2025-09-19", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
-                { "date": "2025-08-25", "score": 90, "morningScore": 95, "afternoonScore": 85, "eveningScore": 95 },
-                { "date": "2025-07-20", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
-                { "date": "2025-06-25", "score": 90, "morningScore": 90, "afternoonScore": 90, "eveningScore": 90 }
-            ];
-
-            appState.history = mockOneYearData;
-            // KHÔNG gọi hàm save() ở đây để đống data test này không bị ghi chết vào LocalStorage của user.
-            // Khi user bấm "Kết toán" ngày đầu tiên, hệ thống sẽ tự động bắt đầu lưu data thực tế của họ.
-        }
-
-        // Đảm bảo cấu trúc ngày hiện tại
         ensureStructure(appState.selectedDate);
 
-        // Cập nhật giao diện ban đầu
+        // Cập nhật giao diện
         document.getElementById('date-picker').value = appState.selectedDate;
         document.getElementById('date-display-text').innerText = formatToUIDate(appState.selectedDate);
         
@@ -438,6 +434,108 @@
         setRandomQuote();
         updateLanguageUI();
         renderBoard();
+    }
+
+    // 2. TÍNH NĂNG XUẤT DỮ LIỆU (EXPORT JSON)
+    //TỐI ƯU HÀM XUẤT DỮ LIỆU (CONFIRM NGAY KHI CLICK)
+    function exportBackupData() {
+        const isVi = appState.currentLang === "vi";
+        if (!appState.history || appState.history.length === 0) {
+            alert(isVi ? "Chưa có dữ liệu lịch sử nào để xuất!" : "No history data to export!");
+            return;
+        }
+        
+        // Hỏi xác nhận ngay lập tức
+        const confirmExport = confirm(isVi 
+            ? "Bạn có muốn xuất và tải về file sao lưu dữ liệu (.json) hiện tại không?" 
+            : "Do you want to export and download the current backup file (.json)?");
+            
+        if (!confirmExport) return;
+
+        // Tiến hành tạo file và tải xuống nếu đồng ý
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `todotoday_backup_${getLocalTodayString()}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    //TỐI ƯU HÀM NHẬP DỮ LIỆU (CONFIRM TRƯỚC + HỢP NHẤT DỮ LIỆU THÔNG MINH)
+    function triggerImportClick() {
+        const isVi = appState.currentLang === "vi";
+        
+        // Bước 1: Xác nhận ngay khi click vào nút Nhập Data (Trước khi chọn file)
+        const confirmImport = confirm(isVi
+            ? "⚠️ Anh có muốn nhập dữ liệu sao lưu không?\n\nHệ thống sẽ GIỮ NGUYÊN các ngày cũ độc lập, nạp thêm ngày mới và chỉ GHI ĐÈ nếu trùng ngày."
+            : "⚠️ Do you want to import backup data?\n\nSystem will keep unique old records, add new records, and only OVERWRITE on duplicate dates.");
+            
+        if (confirmImport) {
+            // Nếu đồng ý, chủ động kích hoạt mở cửa sổ chọn file của thẻ input hidden
+            document.getElementById('hidden-file-input').click();
+        }
+    }
+
+    // 3. TÍNH NĂNG NHẬP DỮ LIỆU (IMPORT JSON)
+    function importBackupData(event) {
+        const isVi = appState.currentLang === "vi";
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const importedState = JSON.parse(e.target.result);
+                
+                // Kiểm tra tính hợp lệ sơ bộ của file cấu trúc
+                if (importedState && (importedState.history || importedState.dailyBoards)) {
+                    
+                    // --- BẮT ĐẦU QUY TRÌNH SMART MERGE (HỢP NHẤT THÔNG MINH) ---
+                    
+                    // 1. Hợp nhất mảng lịch sử (appState.history) dựa trên khóa 'date'
+                    const historyMap = new Map();
+                    
+                    // Nạp dữ liệu hiện tại trên máy vào Map trước
+                    if (Array.isArray(appState.history)) {
+                        appState.history.forEach(item => { if (item.date) historyMap.set(item.date, item); });
+                    }
+                    
+                    // Nạp dữ liệu từ file import vào Map (Nếu trùng date sẽ tự động đè lên dữ liệu máy)
+                    if (Array.isArray(importedState.history)) {
+                        importedState.history.forEach(item => { if (item.date) historyMap.set(item.date, item); });
+                    }
+                    
+                    // Chuyển Map ngược lại thành mảng và sắp xếp theo ngày mới nhất lên đầu
+                    appState.history = Array.from(historyMap.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                    // 2. Hợp nhất cấu trúc công việc chi tiết hàng ngày (appState.dailyBoards)
+                    if (!appState.dailyBoards) appState.dailyBoards = {};
+                    if (importedState.dailyBoards) {
+                        for (const dateKey in importedState.dailyBoards) {
+                            // Nếu trùng ngày, file import sẽ ghi đè nội dung chi tiết của ngày đó
+                            appState.dailyBoards[dateKey] = importedState.dailyBoards[dateKey];
+                        }
+                    }
+                    
+                    // Bảo toàn cấu trúc ngôn ngữ hiện tại của máy nếu file import không có
+                    appState.currentLang = importedState.currentLang || appState.currentLang;
+
+                    // --- KẾT THÚC MERGE -> LƯU VÀ LÀM MỚI ---
+                    save();
+                    alert(isVi ? "🎉 Đã hợp nhất dữ liệu sao lưu thành công!" : "🎉 Data merged and imported successfully!");
+                    window.location.reload();
+                    
+                } else {
+                    alert(isVi ? "❌ File JSON không đúng cấu trúc dữ liệu ứng dụng!" : "❌ Invalid data structure file!");
+                    event.target.value = '';
+                }
+            } catch (err) {
+                alert(isVi ? "❌ Không thể đọc file. Hãy chắc chắn đây là file .json chuẩn!" : "❌ Error parsing file!");
+                event.target.value = '';
+            }
+        };
+        reader.readAsText(file);
     }
 
     function generateMockData() {
@@ -594,9 +692,28 @@
         document.getElementById('progress-bar').style.width = `${totalScore}%`;
 
         const statusText = document.getElementById('target-status');
-        if (totalScore >= 80) statusText.innerText = isVi ? "🔥 Tuyệt vời! Quá kỷ luật và tập trung tốt!" : "🔥 Superb! Exceptional discipline!";
-        else if (totalScore >= 50) statusText.innerText = isVi ? "🌤️ Khá tốt, duy trì đều đặn nhé!" : "🌤️ Good pace, keep it consistent!";
-        else statusText.innerText = isVi ? "Chưa tích lũy mục tiêu hoặc tiến độ thấp." : "Low progress.";
+        if (totalScore >= 90) statusText.innerText = isVi ? "🏆 Tuyệt vời! Hiệu suất khủng này sẽ đưa bạn đến đỉnh cao." : "🏆 Outstanding! This level of performance drives peak productivity.";
+        else if (totalScore >= 70) statusText.innerText = isVi ? "🚀 Rất tốt, bạn gần chạm đến thành công rồi đó!" : "🚀 Really good pace, reaching success soon!";
+        else if (totalScore >= 40) statusText.innerText = isVi ? "🔥 Khá tốt, cố lên, thành tựu đang chờ đón người kỷ luật và tập trung như bạn." : "🔥 Pretty good, keep it up! Success awaits someone as disciplined and focused as you.";
+        else statusText.innerText = isVi ? "⚡ Chưa lên kế hoạch hoặc tiến độ thấp. Cần hành động ngay!" : "⚡ No plan or Low progress. Need action!";
+        
+        if (totalScore >= 90) {
+            statusText.innerText = isVi 
+                ? "🏆 Quá đỉnh! Bạn đã chinh phục trọn vẹn mục tiêu hôm nay. Hiệu suất khủng này sẽ đưa bạn đến đỉnh cao!" 
+                : "🏆 Superb! You've completely mastered today's goals. This incredible performance drives peak productivity!";
+        } else if (totalScore >= 70) {
+            statusText.innerText = isVi 
+                ? "🚀 Tuyệt vời! Bạn đang bứt phá rất nhanh. Một chút nỗ lực nữa thôi, thành công đang chờ bạn!" 
+                : "🚀 Amazing pace! You are gaining massive momentum. Just a little more push to unlock the success!";
+        } else if (totalScore >= 40) {
+            statusText.innerText = isVi 
+                ? "🔥 Khá tốt! Hãy giữ vững ngọn lửa quyết tâm và sự tập trung để tiến lên thần tốc!" 
+                : "🔥 Solid progress! Keep your focus and this determination burning to accelerate your progress!";
+        } else {
+            statusText.innerText = isVi 
+                ? "💪 Bạn có sợ sự trì hoãn? Sự trì hoãn lại rất sợ người hành động đó. Hành động ngay để kiểm soát mục tiêu và chứng minh bản lĩnh kỷ luật của bạn!" 
+                : "💪 Do you fear procrastination? Procrastination fears the person of action. Take action right now to control your goals and prove your discipline!";        
+        }
     }
 
     function triggerSummary() {
@@ -635,15 +752,43 @@
     }
 
     function buildYearFilterOptions() {
-        const years = new Set();
-        appState.history.forEach(h => { if (h.date) years.add(h.date.split('-')[0]); });
-        if(years.size === 0) years.add(new Date().getFullYear().toString());
-        
         const yearSelect = document.getElementById('filter-year');
-        const currentVal = yearSelect.value;
-        yearSelect.innerHTML = `<option value="all">${appState.currentLang === 'vi' ? 'Tất cả năm' : 'All Years'}</option>`;
-        Array.from(years).sort((a,b)=>b-a).forEach(y => { yearSelect.innerHTML += `<option value="${y}">Năm ${y}</option>`; });
-        if(currentVal) yearSelect.value = currentVal;
+        const monthSelect = document.getElementById('filter-month');
+        if (!yearSelect || !monthSelect) return;
+
+        const now = new Date();
+        const currentYear = now.getFullYear().toString();
+        const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+
+        const years = new Set();
+        years.add(currentYear);
+        if (Array.isArray(appState.history)) {
+            appState.history.forEach(h => {
+                if (h.date) {
+                    const y = h.date.split('-')[0];
+                    years.add(y);
+                }
+            });
+        }
+
+        yearSelect.innerHTML = '';
+        Array.from(years).sort((a, b) => b - a).forEach(y => {
+            const opt = document.createElement('option');
+            opt.value = y; opt.innerText = y;
+            yearSelect.appendChild(opt);
+        });
+
+        yearSelect.value = currentYear;
+        monthSelect.value = currentMonth;
+        
+        // Đảm bảo chạy luôn dữ liệu danh sách theo tháng hiện tại ngay sau khi build menu lọc
+        renderHistoryView();
+    }
+
+    // Hàm lắng nghe sự kiện thay đổi bộ lọc
+    function handleFilterChange() {
+        // Làm mới lại cả danh sách chữ phía dưới dựa trên tháng năm vừa chọn
+        renderHistoryView(); 
     }
 
     function renderHistoryView() {
@@ -653,19 +798,27 @@
         const tableBody = document.getElementById('history-table-body');
         tableBody.innerHTML = "";
 
+        // 1. Sắp xếp lịch sử từ ngày mới nhất xuống ngày cũ hơn
         const sortedHistory = [...appState.history].sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        // 2. Lọc dữ liệu nghiêm ngặt theo Năm và Tháng đang được chọn trên bộ lọc
         const filteredLogs = sortedHistory.filter(log => {
-            if(!log.date) return false;
+            if (!log.date) return false;
             const [year, month] = log.date.split('-');
-            return (yearFilter === 'all' || year === yearFilter) && (monthFilter === 'all' || month === monthFilter);
+            
+            // Vì mình đã bỏ tùy chọn 'all' để giao diện gọn gàng, logic sẽ so khớp chính xác năm và tháng
+            return year === yearFilter && month === monthFilter;
         });
 
+        // 3. Nếu tháng/năm được chọn không có dữ liệu, hiển thị dòng thông báo trống
         if (filteredLogs.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="4" class="text-center text-slate-400 py-6 italic">${isVi ? 'Không có dữ liệu.' : 'No records.'}</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="4" class="text-center text-slate-400 py-6 italic">${isVi ? `Không có dữ liệu cho tháng ${monthFilter}/${yearFilter}.` : `No records for ${monthFilter}/${yearFilter}.`}</td></tr>`;
             return;
         }
 
+        // 4. Vẽ danh sách dữ liệu đã lọc vào bảng
         filteredLogs.forEach(log => {
+            // Dự phòng dữ liệu cũ nếu chưa phân tách điểm theo buổi
             const mS = log.morningScore !== undefined ? log.morningScore : log.score;
             const aS = log.afternoonScore !== undefined ? log.afternoonScore : log.score;
             const eS = log.eveningScore !== undefined ? log.eveningScore : log.score;
@@ -965,16 +1118,16 @@
 
         if (name === 'today') {
             // Active Tab Việc
-            btnToday.className = "flex-1 sm:flex-none py-3 px-6 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 transition-all cursor-pointer text-center";
-            btnHistory.className = "flex-1 sm:flex-none py-3 px-6 text-sm font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all cursor-pointer text-center";
+            btnToday.className = "flex-1 sm:flex-none py-3 px-6 text-base font-bold text-indigo-600 border-b-2 border-indigo-600 transition-all cursor-pointer text-center";
+            btnHistory.className = "flex-1 sm:flex-none py-3 px-6 text-base font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all cursor-pointer text-center";
             
             panelToday.classList.remove('hidden'); 
             panelHistory.classList.add('hidden');
             renderBoard();
         } else {
             // Active Tab Lịch sử
-            btnHistory.className = "flex-1 sm:flex-none py-3 px-6 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 transition-all cursor-pointer text-center";
-            btnToday.className = "flex-1 sm:flex-none py-3 px-6 text-sm font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all cursor-pointer text-center";
+            btnHistory.className = "flex-1 sm:flex-none py-3 px-6 text-base font-bold text-indigo-600 border-b-2 border-indigo-600 transition-all cursor-pointer text-center";
+            btnToday.className = "flex-1 sm:flex-none py-3 px-6 text-base font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all cursor-pointer text-center";
             
             panelHistory.classList.remove('hidden'); 
             panelToday.classList.add('hidden');
@@ -1007,6 +1160,46 @@
         document.getElementById('quote-author').innerText = `— ${quote.author}`;
     }
 
+    function showBackupHint() {
+        const isVi = appState.currentLang === "vi";
+        const hintMsg = isVi 
+            ? `💡 HƯỚNG DẪN QUẢN LÝ DỮ LIỆU:\n\n` +
+            `1. Ứng dụng này lưu dữ liệu TỰ ĐỘNG và RIÊNG BIỆT trên trình duyệt của máy này (LocalStorage).\n\n` +
+            `2. Xuất Data: Tải về file .json lưu trên máy tính để làm bản sao lưu dự phòng (Backup).\n\n` +
+            `3. Nhập Data (Smart Merge): Khi anh đổi thiết bị hoặc muốn nạp lại dữ liệu cũ, hệ thống sẽ tự gộp dữ liệu lại:\n` +
+            `   - Giữ nguyên các ngày cũ độc lập trên máy hiện tại.\n` +
+            `   - Nạp thêm các ngày mới có trong file.\n` +
+            `   - Chỉ ghi đè (cập nhật mới) nếu trùng ngày.`
+            : `💡 DATA MANAGEMENT GUIDE:\n\n` +
+            `1. Data is saved AUTOMATICALLY and PRIVATELY inside your browser (LocalStorage).\n\n` +
+            `2. Export Data: Downloads a .json file to back up your records.\n\n` +
+            `3. Import Data (Smart Merge):\n` +
+            `   - Keeps unique local data records intact.\n` +
+            `   - Adds new records from the file.\n` +
+            `   - Only overwrites on duplicate dates.`;
+            
+        alert(hintMsg);
+    }
+
+    function toggleTooltip(event) {
+        // Ngăn chặn sự kiện click bị lan ra ngoài
+        event.stopPropagation();
+        
+        const tooltip = document.getElementById('hint-tooltip');
+        if (!tooltip) return;
+        
+        // Toggle qua lại giữa ẩn và hiện
+        tooltip.classList.toggle('hidden');
+    }
+
+    // Bổ sung tính năng thông minh: Click ra ngoài khu vực bảng hướng dẫn thì tự động đóng lại
+    document.addEventListener('click', function (event) {
+        const tooltip = document.getElementById('hint-tooltip');
+        if (tooltip && !tooltip.classList.contains('hidden')) {
+            tooltip.classList.add('hidden');
+        }
+    });
+    
     window.onload = initApp;
     </script>
 </body>
