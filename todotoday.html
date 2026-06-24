@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TodoToday - Làm gì hôm nay - v1.3.20260623</title>
+    <title>TodoToday - Làm gì hôm nay - v1.2.20260622</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -38,13 +38,12 @@
                 <button onclick="toggleTooltip(event)" class="w-7 h-7 bg-slate-200 hover:bg-indigo-500 text-slate-600 hover:text-white rounded-full font-bold text-sm shadow-sm transition-all flex items-center justify-center cursor-pointer animate-pulse focus:outline-none">
                     ?
                 </button>
-                
-                <div id="hint-tooltip" class="hidden absolute right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 top-9 w-72 bg-slate-900 text-white text-xs rounded-xl p-3.5 shadow-xl z-50 line-relaxed space-y-1.5 border border-slate-800">
+                <div id="hint-tooltip" class="hidden absolute right-0 sm:right-auto sm:left-1/2 translate-x-0 sm:-translate-x-1/2 top-9 w-72 bg-slate-900 text-white text-xs rounded-xl p-3.5 shadow-xl z-50 line-relaxed space-y-1.5 border border-slate-800">
                     <div class="font-bold text-indigo-400 flex items-center gap-1">💡 Hướng dẫn sử dụng:</div>
-                    <p data-vi="TodoToday là công cụ giúp bạn lên kế hoạch và tập trung hoàn thành những công việc quan trọng nhất trong ngày. Bạn còn có thể lưu lại lịch sử và theo dõi hiệu suất công việc của mình trên biểu đồ theo khung thời gian tùy chỉnh." data-en="TodoToday is a tool that helps you plan and focus on completing the most important tasks in a day. You can also save your history and track your work performance on a chart according to a customizable time frame.">TodoToday là công cụ giúp bạn lên kế hoạch và tập trung hoàn thành những công việc quan trọng nhất trong 1 ngày. Bạn còn có thể lưu lại lịch sử và theo dõi hiệu suất công việc của mình trên biểu đồ theo khung thời gian tùy chỉnh.</p>
-                    <p data-vi="1. Chọn ngày làm việc (mặc định là hôm nay), phân bổ công việc vào 3 buổi Sáng, Chiều, Tối cho đủ Quỹ thời gian 10 giờ." data-en="1. Select working date (today by default), Allocate tasks into Morning, Afternoon, Evening blocks to complete the 10-hour fund.">1. Phân bổ công việc vào 3 buổi Sáng (4h), Chiều (4h), Tối (2h) cho đủ Quỹ thời gian 10 giờ.</p>
-                    <p data-vi="2. Tích chọn checkbox khi hoàn thành công việc để hệ thống tự động tính điểm hiệu suất." data-en="2. Check the box upon completion to auto-calculate your performance score.">2. Tích chọn checkbox khi hoàn thành công việc để hệ thống tự động tính điểm hiệu suất.</p>
-                    <p data-vi="3. Nhấn 'Tổng Kết & Lưu' vào cuối ngày để ghi nhận lịch sử và theo dõi với biểu đồ xu hướng." data-en="3. Click 'Save Log' at day-end to commit data and monitor long-term charts.">3. Nhấn 'Tổng Kết & Lưu' vào cuối ngày để ghi nhận lịch sử và theo dõi biểu đồ xu hướng.</p>
+                    <p data-vi="TodoToday là công cụ giúp bạn lên kế hoạch và tập trung hoàn thành những công việc quan trọng nhất trong ngày. Bạn còn có thể lưu lại lịch sử và theo dõi hiệu suất công việc của mình trên biểu đồ theo khung thời gian tùy chỉnh.">TodoToday là công cụ giúp bạn lên kế hoạch và tập trung hoàn thành những công việc quan trọng nhất trong 1 ngày. Bạn còn có thể lưu lại lịch sử và theo dõi hiệu suất công việc của mình trên biểu đồ theo khung thời gian tùy chỉnh.</p>
+                    <p>1. Phân bổ công việc vào 3 buổi Sáng (4h), Chiều (4h), Tối (2h) cho đủ Quỹ thời gian 10 giờ.</p>
+                    <p>2. Tích chọn checkbox khi hoàn thành công việc để hệ thống tự động tính điểm hiệu suất.</p>
+                    <p>3. Nhấn 'Tổng Kết & Lưu' vào cuối ngày để ghi nhận lịch sử và theo dõi biểu đồ xu hướng.</p>
                 </div>
             </div>
         </header>
@@ -146,7 +145,15 @@
                                 <input type="text" id="input-morning-title" placeholder="Tiêu đề công việc..." class="w-full text-sm font-semibold px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-amber-500 text-slate-800 shadow-sm">
                                 <div class="flex gap-2">
                                     <input type="text" id="input-morning-desc" placeholder="Ghi chú..." class="flex-1 text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-600 shadow-sm">
-                                    <select id="input-morning-hours" class="text-sm font-bold px-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-700 shadow-sm"></select>
+                                    <select id="input-morning-hours" class="text-sm font-bold px-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-700 shadow-sm">
+                                        <option value="0.5">0.5h</option>
+                                        <option value="1" selected>1h</option>
+                                        <option value="1.5">1.5h</option>
+                                        <option value="2">2h</option>
+                                        <option value="2.5">2.5h</option>
+                                        <option value="3">3h</option>
+                                        <option value="4">4h</option>
+                                    </select>
                                     <button onclick="addTask('morning')" class="px-4 bg-amber-600 hover:bg-amber-700 font-extrabold text-lg text-white rounded-lg cursor-pointer shadow-sm active:scale-95 transition-all flex items-center justify-center">+</button>
                                 </div>
                             </div>
@@ -183,7 +190,15 @@
                                 <input type="text" id="input-afternoon-title" placeholder="Tiêu đề công việc..." class="w-full text-sm font-semibold px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-sky-500 text-slate-800 shadow-sm">
                                 <div class="flex gap-2">
                                     <input type="text" id="input-afternoon-desc" placeholder="Ghi chú..." class="flex-1 text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-600 shadow-sm">
-                                    <select id="input-afternoon-hours" class="text-sm font-bold px-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-700 shadow-sm"></select>
+                                    <select id="input-afternoon-hours" class="text-sm font-bold px-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-700 shadow-sm">
+                                        <option value="0.5">0.5h</option>
+                                        <option value="1" selected>1h</option>
+                                        <option value="1.5">1.5h</option>
+                                        <option value="2">2h</option>
+                                        <option value="2.5">2.5h</option>
+                                        <option value="3">3h</option>
+                                        <option value="4">4h</option>
+                                    </select>
                                     <button onclick="addTask('afternoon')" class="px-4 bg-sky-600 hover:bg-sky-700 font-extrabold text-lg text-white rounded-lg cursor-pointer shadow-sm active:scale-95 transition-all flex items-center justify-center">+</button>
                                 </div>
                             </div>
@@ -220,7 +235,15 @@
                                 <input type="text" id="input-evening-title" placeholder="Tiêu đề công việc..." class="w-full text-sm font-semibold px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-purple-500 text-slate-800 shadow-sm">
                                 <div class="flex gap-2">
                                     <input type="text" id="input-evening-desc" placeholder="Ghi chú..." class="flex-1 text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-600 shadow-sm">
-                                    <select id="input-evening-hours" class="text-sm font-bold px-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-700 shadow-sm"></select>
+                                    <select id="input-evening-hours" class="text-sm font-bold px-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none text-slate-700 shadow-sm">
+                                        <option value="0.5">0.5h</option>
+                                        <option value="1" selected>1h</option>
+                                        <option value="1.5">1.5h</option>
+                                        <option value="2">2h</option>
+                                        <option value="2.5">2.5h</option>
+                                        <option value="3">3h</option>
+                                        <option value="4">4h</option>
+                                    </select>
                                     <button onclick="addTask('evening')" class="px-4 bg-purple-600 hover:bg-purple-700 font-extrabold text-lg text-white rounded-lg cursor-pointer shadow-sm active:scale-95 transition-all flex items-center justify-center">+</button>
                                 </div>
                             </div>
