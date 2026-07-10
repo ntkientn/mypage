@@ -456,6 +456,46 @@
         </div>
     </div>
 
+    <!-- Nhắc nhở user vận động sau 1-2 giờ làm việc -->
+    <div class="mt-8 mb-12 bg-white rounded-3xl p-6 shadow-sm border border-slate-200/60 w-[60%] mx-auto">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="bg-indigo-100 p-2 rounded-xl text-indigo-600 text-3xl">
+                <!-- Icon nhỏ (dùng SVG hoặc Emoji) -->
+                <span>👨‍⚕️</span>
+            </div>
+            <h3 class="font-bold text-slate-700 text-base" data-vi="* Hãy tạm nghỉ và vận động sau mỗi 1-2 giờ làm việc để nạp lại năng lượng và giữ sức khỏe." data-en="* Take a break for exercise every 1-2 hours to stay energized and healthy.">
+                * Hãy vận động sau mỗi 1-2 giờ làm việc để nạp lại năng lượng và giữ sức khỏe.
+            </h3>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-2xl">
+            <button onclick="openExerciseModal('todotoday_8baitap.jpg')" class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left group">
+                <span class="text-indigo-500 group-hover:scale-110 transition-transform">👨‍🏫</span>
+                <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-700" data-vi="8 bài tập tại bàn làm việc" data-en="8 Desk Exercises">8 bài tập tại bàn làm việc</span>
+            </button>
+            <button onclick="openExerciseModal('todotoday_baitapcovaigay.jpg')" class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left group">
+                <span class="text-indigo-500 group-hover:scale-110 transition-transform">🙆‍♂️</span>
+                <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-700" data-vi="Bài tập Cổ Vai Gáy" data-en="Neck & Shoulder Relief">Bài tập Cổ Vai Gáy</span>
+            </button>            
+        </div>
+    </div>
+    <!-- Modal hướng dẫn bài tập -->
+    <div id="exercise-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+        <div class="bg-white rounded-3xl w-full max-w-6xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-5 border-b flex justify-between items-center bg-white">
+                <span class="font-bold text-lg">Hướng dẫn tập luyện</span>
+                <button onclick="closeExerciseModal()" class="p-2 hover:bg-slate-100 rounded-full">✕</button>
+            </div>
+            
+            <div id="modal-container" class="flex-1 overflow-auto p-4 flex justify-center items-start bg-slate-50 overscroll-contain">
+                <img id="exercise-image" src="" 
+                    class="max-w-full h-auto transition-transform duration-300 origin-top-left" 
+                    onclick="toggleZoom(this)" 
+                    alt="Exercise">
+            </div>
+        </div>
+    </div>
+
     <footer class="w-full text-center py-4 border-t border-slate-200 bg-white text-xs font-medium text-slate-400 mt-8">
         <p>© 2026 Nguyen Trung Kien • All rights reserved.</p>
     </footer>
@@ -487,6 +527,46 @@
     let appState = { currentLang: "vi", selectedDate: "", dailyBoards: {}, history: [] };
     let myChart = null;
     let currentChartDays = 30;
+
+    function openExerciseModal(imageSrc) {
+        const modal = document.getElementById('exercise-modal');
+        const img = document.getElementById('exercise-image');
+        
+        img.src = imageSrc;
+        img.style.transform = 'scale(1)';
+        img.style.cursor = 'zoom-in';
+        
+        modal.classList.remove('hidden');
+        // KHÓA CUỘN TRANG WEB
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeExerciseModal() {
+        const modal = document.getElementById('exercise-modal');
+        modal.classList.add('hidden');
+        // MỞ LẠI CUỘN TRANG WEB
+        document.body.style.overflow = 'auto'; 
+    }
+
+    function toggleZoom(imgElement) {
+        const container = document.getElementById('modal-container');
+        
+        if (!imgElement.style.transform || imgElement.style.transform === 'scale(1)') {
+            imgElement.style.transform = 'scale(2)';
+            imgElement.style.cursor = 'zoom-out';
+            // Tự động đẩy cuộn tới góc trái trên của ảnh khi zoom
+            container.scrollTop = 0;
+            container.scrollLeft = 0;
+        } else {
+            imgElement.style.transform = 'scale(1)';
+            imgElement.style.cursor = 'zoom-in';
+        }
+    }
+
+    // Đóng modal khi bấm vào ngoài vùng ảnh
+    document.getElementById('exercise-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeExerciseModal();
+    });
 
     function applyQuickTitle(session, text) {
         document.getElementById(`input-${session}-title`).value = text;
